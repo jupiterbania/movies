@@ -563,67 +563,48 @@
             top: 10px;
             right: 10px;
             display: none;
-            gap: 5px;
-            z-index: 2;
+            gap: 8px;
+            z-index: 10;
         }
 
-        .movie-card:hover .admin-controls {
-            display: flex;
+        .admin-mode .movie-card:hover .admin-controls {
+            display: flex !important;
         }
 
-        .admin-controls button {
-            width: 30px;
-            height: 30px;
+        .admin-btn {
+            width: 32px;
+            height: 32px;
             border: none;
             border-radius: 50%;
             color: white;
+            font-size: 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .delete-btn {
-            background: rgba(255, 0, 0, 0.8);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .edit-btn {
-            background: rgba(0, 150, 255, 0.8);
+            background: #007bff;
         }
 
-        .admin-controls button:hover {
+        .delete-btn {
+            background: #dc3545;
+        }
+
+        .edit-btn:hover {
+            background: #0056b3;
             transform: scale(1.1);
         }
 
         .delete-btn:hover {
-            background: red;
+            background: #c82333;
+            transform: scale(1.1);
         }
 
-        .edit-btn:hover {
-            background: #0096ff;
-        }
-
-        /* Hide admin features when not logged in */
-        .admin-features {
-            display: none !important;
-        }
-
-        /* Show admin features when logged in and in admin mode */
-        body.admin-logged-in.admin-mode .admin-features {
-            display: block !important;
-        }
-
-        body.admin-logged-in.admin-mode .admin-controls {
-            display: none;
-        }
-
-        body.admin-logged-in.admin-mode .movie-card:hover .admin-controls {
-            display: flex;
-        }
-
-        /* Toggle Admin Mode Button Style */
+        /* Toggle Admin Mode Button */
         .toggle-admin {
             position: fixed;
             bottom: 20px;
@@ -638,15 +619,35 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             z-index: 100;
-        }
-
-        .toggle-admin:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            display: none;
         }
 
         .toggle-admin.active {
-            background: #ff4444;
+            background: #dc3545;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: none;
+        }
+
+        .toggle-admin:hover,
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         /* Admin Login Modal */
@@ -1060,19 +1061,11 @@
                 movieCard.className = 'movie-card';
                 movieCard.dataset.redirect = movie.redirectUrl;
                 
-                const adminControls = `
-                    <div class="admin-controls admin-features">
-                        <button class="edit-btn" data-movie-id="${movie._id}" title="Edit Movie">
-                            ✎
-                        </button>
-                        <button class="delete-btn" data-movie-id="${movie._id}" title="Delete Movie">
-                            ×
-                        </button>
-                    </div>
-                `;
-                
                 movieCard.innerHTML = `
-                    ${adminControls}
+                    <div class="admin-controls">
+                        <button class="admin-btn edit-btn" title="Edit Movie">✎</button>
+                        <button class="admin-btn delete-btn" title="Delete Movie">×</button>
+                    </div>
                     ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
                     <div class="movie-poster">
                         <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
@@ -1085,44 +1078,38 @@
                         </div>
                     </div>
                 `;
-                moviesGrid.appendChild(movieCard);
 
-                // Add click events for admin controls
+                // Add event listeners
                 const editBtn = movieCard.querySelector('.edit-btn');
                 const deleteBtn = movieCard.querySelector('.delete-btn');
 
-                if (editBtn) {
-                    editBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        if (isAdminLoggedIn) {
-                            openEditModal(movie);
-                        } else {
-                            showMessage("Please login as admin first!", "error");
-                        }
-                    });
-                }
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (!isAdminLoggedIn) {
+                        showMessage("Please login as admin first!", "error");
+                        return;
+                    }
+                    openEditModal(movie);
+                });
 
-                if (deleteBtn) {
-                    deleteBtn.addEventListener('click', async (e) => {
-                        e.stopPropagation();
-                        if (isAdminLoggedIn) {
-                            if (confirm('Are you sure you want to delete this movie?')) {
-                                await deleteMovie(movie._id);
-                            }
-                        } else {
-                            showMessage("Please login as admin first!", "error");
-                        }
-                    });
-                }
-            });
-            
-            // Add click event to movie cards
-            document.querySelectorAll('.movie-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (!e.target.closest('.admin-controls')) {
-                        window.open(this.dataset.redirect, '_blank');
+                deleteBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    if (!isAdminLoggedIn) {
+                        showMessage("Please login as admin first!", "error");
+                        return;
+                    }
+                    if (confirm('Are you sure you want to delete this movie?')) {
+                        await deleteMovie(movie._id);
                     }
                 });
+
+                movieCard.addEventListener('click', (e) => {
+                    if (!e.target.closest('.admin-controls')) {
+                        window.open(movie.redirectUrl, '_blank');
+                    }
+                });
+
+                moviesGrid.appendChild(movieCard);
             });
         }
 
@@ -1233,9 +1220,10 @@
 
             if (username === adminCredentials.username && password === adminCredentials.password) {
                 isAdminLoggedIn = true;
-                document.body.classList.add('admin-logged-in');
                 showLoginMessage('Login successful!', 'success');
                 adminLoginModal.style.display = 'none';
+                
+                // Show admin controls
                 toggleAdminBtn.style.display = 'block';
                 logoutBtn.style.display = 'block';
                 
@@ -1359,7 +1347,7 @@
         // Add toggle admin mode functionality
         let isAdminMode = false;
         const toggleAdminBtn = document.createElement('button');
-        toggleAdminBtn.className = 'toggle-admin admin-features';
+        toggleAdminBtn.className = 'toggle-admin';
         toggleAdminBtn.textContent = 'Admin Mode';
         toggleAdminBtn.style.display = 'none'; // Hide by default
         document.body.appendChild(toggleAdminBtn);
@@ -1370,13 +1358,9 @@
                 return;
             }
             isAdminMode = !isAdminMode;
-            document.body.classList.toggle('admin-mode');
             moviesGrid.classList.toggle('admin-mode');
             toggleAdminBtn.classList.toggle('active');
             toggleAdminBtn.textContent = isAdminMode ? 'Exit Admin Mode' : 'Admin Mode';
-            
-            // Refresh movies to update admin controls visibility
-            fetchMovies();
         });
 
         // Edit movie function
@@ -1477,60 +1461,24 @@
             }
         }
 
-        // Add logout functionality
-        function logoutAdmin() {
-            isAdminLoggedIn = false;
-            isAdminMode = false;
-            document.body.classList.remove('admin-logged-in', 'admin-mode');
-            moviesGrid.classList.remove('admin-mode');
-            toggleAdminBtn.style.display = 'none';
-            toggleAdminBtn.classList.remove('active');
-            logoutBtn.style.display = 'none';
-            fetchMovies(); // Refresh the movie list to remove admin controls
-        }
-
-        // Add logout button
+        // Create and add logout button
         const logoutBtn = document.createElement('button');
-        logoutBtn.className = 'admin-btn admin-features';
+        logoutBtn.className = 'logout-btn';
         logoutBtn.textContent = 'Logout';
-        logoutBtn.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            z-index: 100;
-            display: none;
-        `;
         document.body.appendChild(logoutBtn);
 
+        // Add logout handler
         logoutBtn.addEventListener('click', () => {
             if (confirm('Are you sure you want to logout?')) {
-                logoutAdmin();
+                isAdminLoggedIn = false;
+                isAdminMode = false;
+                moviesGrid.classList.remove('admin-mode');
+                toggleAdminBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                toggleAdminBtn.classList.remove('active');
+                showMessage("Logged out successfully!", "success");
             }
         });
-
-        // Show logout button after successful login
-        function showAdminFeatures() {
-            toggleAdminBtn.style.display = 'block';
-            logoutBtn.style.display = 'block';
-        }
-
-        // Update admin login success to show all admin features
-        const originalLoginSuccess = adminLoginForm.onsubmit;
-        adminLoginForm.onsubmit = (e) => {
-            originalLoginSuccess(e);
-            if (isAdminLoggedIn) {
-                showAdminFeatures();
-            }
-        };
 
         // Initial load
         fetchMovies();

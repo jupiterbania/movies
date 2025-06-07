@@ -35,17 +35,12 @@
 
         /* Header Styles */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: linear-gradient(to right, #0a0c10, #1a1c23);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            padding: 15px 5%;
+            background: var(--primary);
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -144,6 +139,7 @@
         }
 
         .movies-grid {
+            margin-top: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 25px;
@@ -288,9 +284,12 @@
 
         /* Filter Section */
         .filter-section {
-            padding: 0 5% 20px;
+            background: var(--secondary);
+            padding: 15px 5%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -468,6 +467,12 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Main Content Area */
+        main {
+            padding: 20px 5% 70px 5%;
+            min-height: 100vh;
+        }
+
         /* Responsive Design */
         @media (max-width: 900px) {
             .search-container {
@@ -476,22 +481,22 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding-top: 80px;
-            }
-            
             header {
                 flex-direction: column;
                 padding: 15px;
                 gap: 15px;
             }
+
+            .filter-section {
+                padding: 10px 3%;
+            }
+
+            .search-container {
+                width: 100%;
+            }
             
             .logo h1 {
                 font-size: 1.8rem;
-            }
-            
-            .search-container {
-                width: 100%;
             }
             
             .movies-grid {
@@ -510,6 +515,15 @@
         }
 
         @media (max-width: 480px) {
+            .filter-section {
+                padding: 8px 2%;
+            }
+
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
             .movies-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -518,6 +532,29 @@
                 padding: 10px 15px;
                 font-size: 0.9rem;
             }
+        }
+
+        /* Admin Panel Styles */
+        .admin-panel select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .admin-panel select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .admin-panel select option {
+            background: var(--input-bg);
+            color: var(--text);
+            padding: 8px;
         }
     </style>
 </head>
@@ -610,8 +647,16 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="movieGenre">Genre</label>
-                    <input type="text" id="movieGenre" placeholder="Enter genre" required>
+                    <label for="movieGenre">Genre:</label>
+                    <select id="movieGenre" required>
+                        <option value="">Select a genre</option>
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Thriller">Thriller</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">

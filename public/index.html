@@ -556,6 +556,151 @@
             color: var(--text);
             padding: 8px;
         }
+
+        /* Admin Mode Styles */
+        .admin-mode .movie-card {
+            position: relative;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: none;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .admin-mode .delete-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-btn:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+
+        /* Toggle Admin Mode Button Style */
+        .toggle-admin {
+            position: fixed;
+            bottom: 20px;
+            right: 90px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .toggle-admin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-admin.active {
+            background: #ff4444;
+        }
+
+        /* Admin Login Modal */
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-login-container {
+            background: var(--admin-bg);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2d2f36;
+        }
+
+        .admin-login-container h2 {
+            color: var(--text);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .admin-login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .admin-login-form input {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--input-bg);
+            color: var(--text);
+        }
+
+        .admin-login-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .admin-login-form button:hover {
+            background: var(--accent-hover);
+        }
+
+        .admin-login-message {
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .admin-login-message.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4444;
+        }
+
+        .admin-login-message.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #44ff44;
+        }
+
+        /* Hide admin features by default */
+        .admin-features {
+            display: none;
+        }
+
+        /* Show admin features when logged in */
+        .admin-logged-in .admin-features {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -677,6 +822,19 @@
         </div>
     </div>
 
+    <!-- Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="admin-login-container">
+            <h2>Admin Login</h2>
+            <form class="admin-login-form" id="adminLoginForm">
+                <input type="text" id="adminUsername" placeholder="Username" required>
+                <input type="password" id="adminLoginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div class="admin-login-message" id="adminLoginMessage"></div>
+        </div>
+    </div>
+
     <script>
         // API endpoints - Change this URL when deployed
         const API_URL = window.location.hostname === 'localhost' 
@@ -695,6 +853,16 @@
         const adminPassword = document.getElementById('adminPassword');
         const adminMessage = document.getElementById('adminMessage');
         const spinner = document.getElementById('spinner');
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const adminLoginMessage = document.getElementById('adminLoginMessage');
+
+        // Admin state
+        let isAdminLoggedIn = false;
+        const adminCredentials = {
+            username: 'admin',
+            password: '77861822'
+        };
 
         // Fetch all movies from MongoDB
         async function fetchMovies() {
@@ -782,7 +950,15 @@
                 movieCard.className = 'movie-card';
                 movieCard.dataset.redirect = movie.redirectUrl;
                 
+                // Add delete button
+                const deleteButton = `
+                    <button class="delete-btn" data-movie-id="${movie._id}" title="Delete Movie">
+                        ×
+                    </button>
+                `;
+                
                 movieCard.innerHTML = `
+                    ${deleteButton}
                     ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
                     <div class="movie-poster">
                         <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
@@ -796,12 +972,27 @@
                     </div>
                 `;
                 moviesGrid.appendChild(movieCard);
+
+                // Add click event for delete button
+                const deleteBtn = movieCard.querySelector('.delete-btn');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation(); // Prevent movie card click
+                        if (confirm('Are you sure you want to delete this movie?')) {
+                            const movieId = deleteBtn.dataset.movieId;
+                            await deleteMovie(movieId);
+                        }
+                    });
+                }
             });
             
             // Add click event to movie cards
             document.querySelectorAll('.movie-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    window.open(this.dataset.redirect, '_blank');
+                card.addEventListener('click', function(e) {
+                    // Only redirect if not clicking delete button
+                    if (!e.target.classList.contains('delete-btn')) {
+                        window.open(this.dataset.redirect, '_blank');
+                    }
                 });
             });
         }
@@ -829,9 +1020,8 @@
         movieForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Check password
-            if (adminPassword.value !== "77861822") {
-                showMessage("Incorrect password! Try '77861822'", "error");
+            if (!isAdminLoggedIn) {
+                showMessage("Please login as admin first!", "error");
                 return;
             }
             
@@ -870,8 +1060,12 @@
 
         // Admin Panel Functionality
         adminBtn.addEventListener('click', () => {
-            adminModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            if (!isAdminLoggedIn) {
+                adminLoginModal.style.display = 'flex';
+            } else {
+                adminModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
         });
 
         closeAdmin.addEventListener('click', () => {
@@ -901,6 +1095,51 @@
                 passwordToggle.classList.add('fa-eye');
             }
         });
+
+        // Admin login functionality
+        adminLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminLoginPassword').value;
+
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                isAdminLoggedIn = true;
+                document.body.classList.add('admin-logged-in');
+                showLoginMessage('Login successful!', 'success');
+                adminLoginModal.style.display = 'none';
+                adminModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Show admin mode button after login
+                toggleAdminBtn.style.display = 'block';
+                
+                // Reset form
+                adminLoginForm.reset();
+            } else {
+                showLoginMessage('Invalid username or password!', 'error');
+            }
+        });
+
+        // Close login modal when clicking outside
+        adminLoginModal.addEventListener('click', (e) => {
+            if (e.target === adminLoginModal) {
+                adminLoginModal.style.display = 'none';
+                adminLoginForm.reset();
+                adminLoginMessage.style.display = 'none';
+            }
+        });
+
+        function showLoginMessage(message, type) {
+            adminLoginMessage.textContent = message;
+            adminLoginMessage.className = `admin-login-message ${type}`;
+            adminLoginMessage.style.display = 'block';
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    adminLoginMessage.style.display = 'none';
+                }, 2000);
+            }
+        }
 
         // Helper functions
         function showMessage(message, type) {
@@ -966,6 +1205,45 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Delete movie function
+        async function deleteMovie(movieId) {
+            if (!isAdminLoggedIn) {
+                showMessage("Please login as admin first!", "error");
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/movies/${movieId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to delete movie');
+                }
+                
+                await fetchMovies();
+                showMessage("Movie deleted successfully!", "success");
+            } catch (error) {
+                console.error('Error deleting movie:', error);
+                showMessage("Failed to delete movie. Please try again.", "error");
+            }
+        }
+
+        // Add toggle admin mode functionality
+        let isAdminMode = false;
+        const toggleAdminBtn = document.createElement('button');
+        toggleAdminBtn.className = 'toggle-admin admin-features';
+        toggleAdminBtn.textContent = 'Admin Mode';
+        toggleAdminBtn.style.display = 'none'; // Hide by default
+        document.body.appendChild(toggleAdminBtn);
+
+        toggleAdminBtn.addEventListener('click', () => {
+            isAdminMode = !isAdminMode;
+            moviesGrid.classList.toggle('admin-mode');
+            toggleAdminBtn.classList.toggle('active');
+            toggleAdminBtn.textContent = isAdminMode ? 'Exit Admin Mode' : 'Admin Mode';
+        });
 
         // Initial load
         fetchMovies();

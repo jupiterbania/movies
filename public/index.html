@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaBuzz - Movie Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ... Keep all the existing styles ... */
+    </style>
+</head>
+<body>
+    <!-- Keep all the existing HTML structure -->
+
+    <script>
+        // API endpoints
+        const API_URL = 'http://localhost:3000/api';
+
+        // Fetch all movies from the backend
+        async function fetchMovies() {
+            try {
+                const response = await fetch(`${API_URL}/movies`);
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            }
+        }
+
+        // Search movies
+        async function searchMovies(query) {
+            try {
+                const response = await fetch(`${API_URL}/movies/search?query=${query}`);
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error searching movies:', error);
+            }
+        }
+
+        // Filter movies by genre
+        async function filterByGenre(genre) {
+            try {
+                if (genre === 'All') {
+                    fetchMovies();
+                    return;
+                }
+                const response = await fetch(`${API_URL}/movies/genre/${genre}`);
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error filtering movies:', error);
+            }
+        }
+
+        // Filter movies by letter
+        async function filterByLetter(letter) {
+            try {
+                if (letter === 'All') {
+                    fetchMovies();
+                    return;
+                }
+                const response = await fetch(`${API_URL}/movies/letter/${letter}`);
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error filtering movies:', error);
+            }
+        }
+
+        // Add new movie
+        async function addMovie(movieData) {
+            try {
+                const response = await fetch(`${API_URL}/movies`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(movieData),
+                });
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error adding movie:', error);
+                throw error;
+            }
+        }
+
+        // Render movie cards (keep the existing function)
+        function renderMovies(movieList) {
+            moviesGrid.innerHTML = '';
+            movieList.forEach(movie => {
+                const movieCard = document.createElement('div');
+                movieCard.className = 'movie-card';
+                movieCard.dataset.redirect = movie.redirectUrl;
+                
+                movieCard.innerHTML = `
+                    ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
+                    <div class="movie-poster">
+                        <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
+                    </div>
+                    <div class="movie-info">
+                        <div class="movie-title">${movie.title}</div>
+                        <div class="movie-year">${movie.year}</div>
+                        <div class="movie-rating">
+                            <i class="fas fa-star"></i> ${movie.rating}/10
+                        </div>
+                    </div>
+                `;
+                moviesGrid.appendChild(movieCard);
+            });
+            
+            // Add click event to movie cards
+            document.querySelectorAll('.movie-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    window.open(this.dataset.redirect, '_blank');
+                });
+            });
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm) {
+                searchMovies(searchTerm);
+            } else {
+                fetchMovies();
+            }
+        });
+
+        // Filter by genre
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterByGenre(button.textContent);
+            });
+        });
+
+        // A-Z navigation click
+        document.querySelectorAll('.az-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('.az-nav a.active').classList.remove('active');
+                this.classList.add('active');
+                filterByLetter(this.textContent);
+            });
+        });
+
+        // Handle form submission
+        movieForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Check password
+            if (adminPassword.value !== "77861822") {
+                showMessage("Incorrect password! Try '77861822'", "error");
+                return;
+            }
+            
+            // Get form values
+            const movieData = {
+                title: document.getElementById('movieTitle').value,
+                year: parseInt(document.getElementById('movieYear').value),
+                rating: parseFloat(document.getElementById('movieRating').value),
+                genre: document.getElementById('movieGenre').value,
+                poster: document.getElementById('posterUrl').value,
+                redirectUrl: document.getElementById('redirectUrl').value,
+                featured: true
+            };
+            
+            // Show loading spinner
+            spinner.style.display = 'block';
+            adminMessage.style.display = 'none';
+            
+            try {
+                await addMovie(movieData);
+                
+                // Re-fetch and render all movies
+                await fetchMovies();
+                
+                // Hide spinner and show success message
+                spinner.style.display = 'none';
+                showMessage("Movie added successfully!", "success");
+                
+                // Reset form
+                resetForm();
+            } catch (error) {
+                spinner.style.display = 'none';
+                showMessage("Error adding movie: " + error.message, "error");
+            }
+        });
+
+        // Initial load
+        fetchMovies();
+
+        // Keep the existing helper functions
+        function showMessage(message, type) {
+            adminMessage.textContent = message;
+            adminMessage.className = `admin-message ${type}`;
+            adminMessage.style.display = 'block';
+        }
+
+        function resetForm() {
+            movieForm.reset();
+            adminPassword.type = 'password';
+            passwordToggle.classList.remove('fa-eye-slash');
+            passwordToggle.classList.add('fa-eye');
+            adminMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html> 

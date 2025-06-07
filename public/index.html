@@ -1060,11 +1060,12 @@
                 const movieCard = document.createElement('div');
                 movieCard.className = 'movie-card';
                 movieCard.dataset.redirect = movie.redirectUrl;
+                movieCard.dataset.id = movie._id; // Store movie ID in dataset
                 
                 movieCard.innerHTML = `
                     <div class="admin-controls">
-                        <button class="admin-btn edit-btn" title="Edit Movie">✎</button>
-                        <button class="admin-btn delete-btn" title="Delete Movie">×</button>
+                        <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
+                        <button class="admin-btn delete-btn" title="Delete Movie" data-id="${movie._id}">×</button>
                     </div>
                     ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
                     <div class="movie-poster">
@@ -1098,8 +1099,9 @@
                         showMessage("Please login as admin first!", "error");
                         return;
                     }
-                    if (confirm('Are you sure you want to delete this movie?')) {
-                        await deleteMovie(movie._id);
+                    const movieId = e.target.dataset.id;
+                    if (movieId && confirm('Are you sure you want to delete this movie?')) {
+                        await deleteMovie(movieId);
                     }
                 });
 
@@ -1322,23 +1324,24 @@
 
         // Delete movie function
         async function deleteMovie(movieId) {
-            if (!isAdminLoggedIn) {
-                showMessage("Please login as admin first!", "error");
-                return;
-            }
-            
             try {
+                showSpinner();
                 const response = await fetch(`${API_URL}/movies/${movieId}`, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
                 
                 if (!response.ok) {
                     throw new Error('Failed to delete movie');
                 }
                 
-                await fetchMovies();
+                hideSpinner();
                 showMessage("Movie deleted successfully!", "success");
+                await fetchMovies(); // Refresh the list after deletion
             } catch (error) {
+                hideSpinner();
                 console.error('Error deleting movie:', error);
                 showMessage("Failed to delete movie. Please try again.", "error");
             }

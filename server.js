@@ -118,15 +118,7 @@ async function initializeData() {
     }
 }
 
-// Rate limiting
-const rateLimit = require('express-rate-limit');
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100 // limit each IP to 100 requests per windowMs
-});
-app.use('/api/', limiter);
-
-// Routes with caching
+// Simple in-memory cache
 const cache = new Map();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
@@ -188,6 +180,11 @@ app.post('/api/movies', async (req, res) => {
         console.error('Error adding movie:', error);
         res.status(400).json({ message: 'Error adding movie', error: error.message });
     }
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Error handling middleware

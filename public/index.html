@@ -28,7 +28,7 @@
             background-color: var(--primary);
             color: var(--text);
             line-height: 1.6;
-            padding-top: 120px;
+            padding-top: 80px;
             min-height: 100vh;
             padding-bottom: 70px; /* Added padding for admin button */
         }
@@ -100,42 +100,6 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-        }
-
-        /* A-Z Navigation */
-        .az-nav {
-            background: var(--secondary);
-            position: fixed;
-            top: 80px;
-            width: 100%;
-            z-index: 999;
-            padding: 12px 5%;
-            overflow-x: auto;
-            white-space: nowrap;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .az-nav ul {
-            display: flex;
-            list-style: none;
-            gap: 5px;
-            justify-content: space-between;
-        }
-
-        .az-nav ul li a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .az-nav ul li a:hover,
-        .az-nav ul li a.active {
-            background: var(--accent);
-            color: var(--primary);
         }
 
         /* Featured Movies Section */
@@ -322,79 +286,6 @@
             box-shadow: 0 6px 15px rgba(0, 192, 48, 0.4);
         }
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .search-container {
-                width: 50%;
-            }
-            
-            .az-nav ul {
-                gap: 2px;
-            }
-            
-            .az-nav ul li a {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding-top: 160px;
-            }
-            
-            header {
-                flex-direction: column;
-                padding: 15px;
-                gap: 15px;
-            }
-            
-            .logo h1 {
-                font-size: 1.8rem;
-            }
-            
-            .az-nav {
-                top: 130px;
-            }
-            
-            .search-container {
-                width: 100%;
-            }
-            
-            .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-            }
-            
-            .movie-poster {
-                height: 220px;
-            }
-
-            .admin-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding-top: 190px;
-            }
-            
-            .az-nav {
-                top: 160px;
-            }
-            
-            .movies-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .admin-btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-        }
-
         /* Filter Section */
         .filter-section {
             padding: 0 5% 20px;
@@ -411,6 +302,7 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .filter-btn.active, .filter-btn:hover {
@@ -419,7 +311,7 @@
             border-color: var(--accent);
         }
 
-        /* Admin Panel */
+        /* Admin Panel - Fixed scrolling issue */
         .admin-modal {
             display: none;
             position: fixed;
@@ -431,6 +323,8 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            overflow: auto;
+            padding: 20px;
         }
 
         .admin-panel {
@@ -441,6 +335,8 @@
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid #2d2f36;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .admin-header {
@@ -448,6 +344,11 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+            position: sticky;
+            top: 0;
+            background: var(--admin-bg);
+            padding: 10px 0;
+            z-index: 10;
         }
 
         .admin-header h2 {
@@ -566,6 +467,58 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .search-container {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+            
+            header {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .movie-poster {
+                height: 220px;
+            }
+
+            .admin-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .movies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .admin-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -581,39 +534,6 @@
             <input type="text" id="searchInput" placeholder="Search for movies...">
         </div>
     </header>
-
-    <!-- A-Z Navigation -->
-    <nav class="az-nav">
-        <ul>
-            <li><a href="#" class="active">All</a></li>
-            <li><a href="#">A</a></li>
-            <li><a href="#">B</a></li>
-            <li><a href="#">C</a></li>
-            <li><a href="#">D</a></li>
-            <li><a href="#">E</a></li>
-            <li><a href="#">F</a></li>
-            <li><a href="#">G</a></li>
-            <li><a href="#">H</a></li>
-            <li><a href="#">I</a></li>
-            <li><a href="#">J</a></li>
-            <li><a href="#">K</a></li>
-            <li><a href="#">L</a></li>
-            <li><a href="#">M</a></li>
-            <li><a href="#">N</a></li>
-            <li><a href="#">O</a></li>
-            <li><a href="#">P</a></li>
-            <li><a href="#">Q</a></li>
-            <li><a href="#">R</a></li>
-            <li><a href="#">S</a></li>
-            <li><a href="#">T</a></li>
-            <li><a href="#">U</a></li>
-            <li><a href="#">V</a></li>
-            <li><a href="#">W</a></li>
-            <li><a href="#">X</a></li>
-            <li><a href="#">Y</a></li>
-            <li><a href="#">Z</a></li>
-        </ul>
-    </nav>
 
     <!-- Filter Section -->
     <div class="filter-section">
@@ -659,7 +579,7 @@
         </div>
     </footer>
 
-    <!-- Admin Panel -->
+    <!-- Admin Panel - Fixed scrolling -->
     <div class="admin-modal" id="adminModal">
         <div class="admin-panel">
             <div class="admin-header">
@@ -713,57 +633,10 @@
     </div>
 
     <script>
-        // Movie data with poster URLs and redirect URLs
-        const movies = [
-            { 
-                title: "Inception", 
-                year: 2010, 
-                rating: 8.8, 
-                genre: "Sci-Fi", 
-                poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
-                redirectUrl: "https://www.imdb.com/title/tt1375666/" 
-            },
-            { 
-                title: "The Dark Knight", 
-                year: 2008, 
-                rating: 9.0, 
-                genre: "Action", 
-                poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
-                redirectUrl: "https://www.imdb.com/title/tt0468569/" 
-            },
-            { 
-                title: "Interstellar", 
-                year: 2014, 
-                rating: 8.6, 
-                genre: "Sci-Fi", 
-                poster: "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
-                redirectUrl: "https://www.imdb.com/title/tt0816692/" 
-            },
-            { 
-                title: "Parasite", 
-                year: 2019, 
-                rating: 8.6, 
-                genre: "Drama", 
-                poster: "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg",
-                redirectUrl: "https://www.imdb.com/title/tt6751668/" 
-            },
-            { 
-                title: "The Shawshank Redemption", 
-                year: 1994, 
-                rating: 9.3, 
-                genre: "Drama", 
-                poster: "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg",
-                redirectUrl: "https://www.imdb.com/title/tt0111161/" 
-            },
-            { 
-                title: "Pulp Fiction", 
-                year: 1994, 
-                rating: 8.9, 
-                genre: "Crime", 
-                poster: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
-                redirectUrl: "https://www.imdb.com/title/tt0110912/" 
-            }
-        ];
+        // API endpoints - Change this URL when deployed
+        const API_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000/api'
+            : '/api'; // This will automatically use the deployed URL
 
         // DOM Elements
         const moviesGrid = document.getElementById('moviesGrid');
@@ -778,16 +651,94 @@
         const adminMessage = document.getElementById('adminMessage');
         const spinner = document.getElementById('spinner');
 
+        // Fetch all movies from MongoDB
+        async function fetchMovies() {
+            try {
+                showSpinner();
+                const response = await fetch(`${API_URL}/movies`);
+                if (!response.ok) throw new Error('Failed to fetch movies');
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+                showError('Failed to load movies. Please try again later.');
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // Search movies
+        async function searchMovies(query) {
+            try {
+                showSpinner();
+                const response = await fetch(`${API_URL}/movies/search?query=${encodeURIComponent(query)}`);
+                if (!response.ok) throw new Error('Failed to search movies');
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error searching movies:', error);
+                showError('Search failed. Please try again.');
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // Filter by genre
+        async function filterByGenre(genre) {
+            try {
+                showSpinner();
+                if (genre === 'All') {
+                    await fetchMovies();
+                    return;
+                }
+                const response = await fetch(`${API_URL}/movies/genre/${encodeURIComponent(genre)}`);
+                if (!response.ok) throw new Error('Failed to filter movies');
+                const data = await response.json();
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error filtering movies:', error);
+                showError('Failed to filter movies. Please try again.');
+            } finally {
+                hideSpinner();
+            }
+        }
+
+        // Add new movie
+        async function addMovie(movieData) {
+            try {
+                const response = await fetch(`${API_URL}/movies`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(movieData),
+                });
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to add movie');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error adding movie:', error);
+                throw error;
+            }
+        }
+
         // Render movie cards
         function renderMovies(movieList) {
             moviesGrid.innerHTML = '';
+            if (!movieList || movieList.length === 0) {
+                moviesGrid.innerHTML = '<div class="no-results">No movies found</div>';
+                return;
+            }
+
             movieList.forEach(movie => {
                 const movieCard = document.createElement('div');
                 movieCard.className = 'movie-card';
                 movieCard.dataset.redirect = movie.redirectUrl;
                 
                 movieCard.innerHTML = `
-                    <div class="featured-label">FEATURED</div>
+                    ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
                     <div class="movie-poster">
                         <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
                     </div>
@@ -810,66 +761,77 @@
             });
         }
 
-        // Initial render
-        renderMovies(movies);
-
-        // Search functionality
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            const filteredMovies = movies.filter(movie => 
-                movie.title.toLowerCase().includes(searchTerm) ||
-                movie.genre.toLowerCase().includes(searchTerm)
-            );
-            renderMovies(filteredMovies);
-        });
+        // Event Listeners
+        searchInput.addEventListener('input', debounce(() => {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                searchMovies(searchTerm);
+            } else {
+                fetchMovies();
+            }
+        }, 300));
 
         // Filter by genre
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Remove active class from all buttons
                 filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
                 button.classList.add('active');
-                
-                const genre = button.textContent;
-                if (genre === 'All') {
-                    renderMovies(movies);
-                } else {
-                    const filteredMovies = movies.filter(movie => 
-                        movie.genre === genre
-                    );
-                    renderMovies(filteredMovies);
-                }
+                filterByGenre(button.textContent);
             });
         });
 
-        // A-Z navigation click
-        document.querySelectorAll('.az-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector('.az-nav a.active').classList.remove('active');
-                this.classList.add('active');
+        // Handle form submission
+        movieForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Check password
+            if (adminPassword.value !== "77861822") {
+                showMessage("Incorrect password! Try '77861822'", "error");
+                return;
+            }
+            
+            // Get form values
+            const movieData = {
+                title: document.getElementById('movieTitle').value,
+                year: parseInt(document.getElementById('movieYear').value),
+                rating: parseFloat(document.getElementById('movieRating').value),
+                genre: document.getElementById('movieGenre').value,
+                poster: document.getElementById('posterUrl').value,
+                redirectUrl: document.getElementById('redirectUrl').value,
+                featured: true
+            };
+            
+            // Show loading spinner
+            showSpinner();
+            adminMessage.style.display = 'none';
+            
+            try {
+                await addMovie(movieData);
                 
-                // Filter by first letter
-                const letter = this.textContent;
-                if (letter === 'All') {
-                    renderMovies(movies);
-                } else {
-                    const filteredMovies = movies.filter(movie => 
-                        movie.title.charAt(0).toUpperCase() === letter
-                    );
-                    renderMovies(filteredMovies);
-                }
-            });
+                // Re-fetch and render all movies
+                await fetchMovies();
+                
+                // Show success message
+                showMessage("Movie added successfully!", "success");
+                
+                // Reset form
+                resetForm();
+            } catch (error) {
+                showMessage("Error adding movie: " + error.message, "error");
+            } finally {
+                hideSpinner();
+            }
         });
 
         // Admin Panel Functionality
         adminBtn.addEventListener('click', () => {
             adminModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         });
 
         closeAdmin.addEventListener('click', () => {
             adminModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
             resetForm();
         });
 
@@ -877,6 +839,7 @@
         window.addEventListener('click', (e) => {
             if (e.target === adminModal) {
                 adminModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
                 resetForm();
             }
         });
@@ -894,56 +857,11 @@
             }
         });
 
-        // Handle form submission
-        movieForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Check password
-            if (adminPassword.value !== "77861822") {
-                showMessage("Incorrect password! Try '77861822'", "error");
-                return;
-            }
-            
-            // Get form values
-            const title = document.getElementById('movieTitle').value;
-            const year = document.getElementById('movieYear').value;
-            const rating = document.getElementById('movieRating').value;
-            const genre = document.getElementById('movieGenre').value;
-            const poster = document.getElementById('posterUrl').value;
-            const redirectUrl = document.getElementById('redirectUrl').value;
-            
-            // Show loading spinner
-            spinner.style.display = 'block';
-            adminMessage.style.display = 'none';
-            
-            // Simulate API call with delay
-            setTimeout(() => {
-                // Add new movie to array
-                movies.unshift({
-                    title,
-                    year: parseInt(year),
-                    rating: parseFloat(rating),
-                    genre,
-                    poster,
-                    redirectUrl
-                });
-                
-                // Re-render movies
-                renderMovies(movies);
-                
-                // Hide spinner and show success message
-                spinner.style.display = 'none';
-                showMessage("Movie added successfully!", "success");
-                
-                // Reset form
-                resetForm();
-            }, 1500);
-        });
-
         // Helper functions
         function showMessage(message, type) {
             adminMessage.textContent = message;
             adminMessage.className = `admin-message ${type}`;
+            adminMessage.style.display = 'block';
         }
 
         function resetForm() {
@@ -953,6 +871,59 @@
             passwordToggle.classList.add('fa-eye');
             adminMessage.style.display = 'none';
         }
+
+        function showSpinner() {
+            spinner.style.display = 'block';
+        }
+
+        function hideSpinner() {
+            spinner.style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            moviesGrid.innerHTML = '';
+            moviesGrid.appendChild(errorDiv);
+        }
+
+        // Debounce function for search input
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Add CSS for error messages
+        const style = document.createElement('style');
+        style.textContent = `
+            .error-message, .no-results {
+                text-align: center;
+                padding: 20px;
+                color: var(--text);
+                background: var(--card-bg);
+                border-radius: 8px;
+                margin: 20px auto;
+                max-width: 600px;
+            }
+            .error-message {
+                border: 1px solid #ff4444;
+            }
+            .no-results {
+                border: 1px solid var(--text-secondary);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initial load
+        fetchMovies();
     </script>
 </body>
 </html>

@@ -182,6 +182,23 @@ app.post('/api/movies', async (req, res) => {
     }
 });
 
+// Delete movie route
+app.delete('/api/movies/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await Movie.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
+        // Clear cache when movie is deleted
+        cache.clear();
+        res.status(200).json({ message: 'Movie deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting movie:', error);
+        res.status(500).json({ message: 'Error deleting movie', error: error.message });
+    }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });

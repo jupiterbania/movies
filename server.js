@@ -5,7 +5,7 @@ const app = express();
 
 // Environment variables
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wwwrohanbania009:rOXgaMbvNrNSSfdj@cinemabuzz.g3vejvo.mongodb.net/cinemabuzz?retryWrites=true&w=majority&appName=CinemaBuzz';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wwwrohanbania009:rOXgaMbvNrNSSfdj@cinemabuzz.g3vejvo.mongodb.net/cinemabuzz?retryWrites=true&w=majority&appName=CinemaBuzz&tls=true&tlsAllowInvalidCertificates=true';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Security headers middleware
@@ -26,10 +26,11 @@ const connectWithRetry = () => {
     console.log('Attempting to connect to MongoDB Atlas...');
     
     mongoose.connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         serverSelectionTimeoutMS: 5000,
         socketTimeoutMS: 45000,
+        family: 4,
+        tls: true,
+        tlsAllowInvalidCertificates: true
     })
     .then(() => {
         console.log('Connected to MongoDB Atlas');

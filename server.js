@@ -79,6 +79,7 @@ const movieSchema = new mongoose.Schema({
     poster: String,
     redirectUrl: String,
     featured: { type: Boolean, default: false },
+    pinned: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now }
 }, { 
     timestamps: false,
@@ -218,7 +219,7 @@ const withCache = (key, ttl, fetchData) => async (req, res) => {
 
 // Routes
 app.get('/api/movies', withCache('all-movies', CACHE_DURATION, async () => {
-    return await Movie.find().select('-__v').lean().limit(50);
+    return await Movie.find().select('-__v').sort({ pinned: -1, createdAt: -1 }).lean().limit(50);
 }));
 
 app.get('/api/movies/search', withCache('search-movies', CACHE_DURATION, async (req) => {
@@ -228,19 +229,19 @@ app.get('/api/movies/search', withCache('search-movies', CACHE_DURATION, async (
             { title: { $regex: query, $options: 'i' } },
             { genre: { $regex: query, $options: 'i' } }
         ]
-    }).select('-__v').lean().limit(50);
+    }).select('-__v').sort({ pinned: -1, createdAt: -1 }).lean().limit(50);
 }));
 
 app.get('/api/movies/genre/:genre', withCache('genre-movies', CACHE_DURATION, async (req) => {
     const { genre } = req.params;
-    return await Movie.find({ genre }).select('-__v').lean().limit(50);
+    return await Movie.find({ genre }).select('-__v').sort({ pinned: -1, createdAt: -1 }).lean().limit(50);
 }));
 
 app.get('/api/movies/letter/:letter', withCache('letter-movies', CACHE_DURATION, async (req) => {
     const { letter } = req.params;
     return await Movie.find({
         title: { $regex: `^${letter}`, $options: 'i' }
-    }).select('-__v').lean().limit(50);
+    }).select('-__v').sort({ pinned: -1, createdAt: -1 }).lean().limit(50);
 }));
 
 app.post('/api/movies', async (req, res) => {

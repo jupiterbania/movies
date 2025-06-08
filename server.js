@@ -244,14 +244,36 @@ app.get('/api/movies/letter/:letter', withCache('letter-movies', CACHE_DURATION,
 
 app.post('/api/movies', async (req, res) => {
     try {
-        const movie = new Movie(req.body);
+        // Validate required fields
+        const { title, year, rating, genre, poster, redirectUrl } = req.body;
+        if (!title || !year || !rating || !genre || !poster || !redirectUrl) {
+            return res.status(400).json({ 
+                message: 'Error adding movie', 
+                error: 'All fields are required' 
+            });
+        }
+
+        // Create new movie with validated data
+        const movie = new Movie({
+            title,
+            year: parseInt(year),
+            rating: parseFloat(rating),
+            genre,
+            poster,
+            redirectUrl,
+            featured: req.body.featured || false
+        });
+
         const savedMovie = await movie.save();
         // Clear cache when new movie is added
         cache.clear();
         res.status(201).json(savedMovie);
     } catch (error) {
         console.error('Error adding movie:', error);
-        res.status(400).json({ message: 'Error adding movie', error: error.message });
+        res.status(400).json({ 
+            message: 'Error adding movie', 
+            error: error.message || 'Failed to add movie'
+        });
     }
 });
 

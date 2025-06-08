@@ -6,6 +6,7 @@ const app = express();
 // Environment variables
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wwwrohanbania009:rOXgaMbvNrNSSfdj@cinemabuzz.g3vejvo.mongodb.net/?retryWrites=true&w=majority&appName=CinemaBuzz';
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Security headers middleware
 app.use((req, res, next) => {

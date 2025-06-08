@@ -5,7 +5,7 @@ const app = express();
 
 // Environment variables
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wwwrohanbania009:rOXgaMbvNrNSSfdj@cinemabuzz.g3vejvo.mongodb.net/?retryWrites=true&w=majority&appName=CinemaBuzz';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://wwwrohanbania009:rOXgaMbvNrNSSfdj@cinemabuzz.g3vejvo.mongodb.net/cinemabuzz?retryWrites=true&w=majority&appName=CinemaBuzz';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Security headers middleware
@@ -25,21 +25,21 @@ app.use(express.static('public'));
 const connectWithRetry = () => {
     console.log('Attempting to connect to MongoDB Atlas...');
     
-    const options = {
+    mongoose.connect(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
         serverSelectionTimeoutMS: 5000,
         socketTimeoutMS: 45000,
-    };
-
-    mongoose.connect(MONGODB_URI, options)
-        .then(() => {
-            console.log('Connected to MongoDB Atlas');
-            initializeData();
-        })
-        .catch(err => {
-            console.error('MongoDB connection error:', err);
-            console.log('Retrying in 3 seconds...');
-            setTimeout(connectWithRetry, 3000);
-        });
+    })
+    .then(() => {
+        console.log('Connected to MongoDB Atlas');
+        initializeData();
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        console.log('Retrying in 5 seconds...');
+        setTimeout(connectWithRetry, 5000);
+    });
 };
 
 // Handle MongoDB connection events

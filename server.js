@@ -18,13 +18,13 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Movie Schema
 const movieSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    year: { type: Number, required: true },
-    rating: { type: Number, required: true },
-    genre: { type: String, required: true },
-    poster: { type: String, required: true },
-    watchUrl: { type: String, required: true },
-    downloadUrl: { type: String, required: true },
+    title: String,
+    year: Number,
+    rating: Number,
+    genre: String,
+    poster: String,
+    watchUrl: String,
+    downloadUrl: String,
     featured: { type: Boolean, default: false },
     pinned: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now }

@@ -92,26 +92,98 @@ async function initializeData() {
         if (count === 0) {
             const sampleMovies = [
                 {
-                    title: "Inception",
-                    year: 2010,
-                    rating: 8.8,
-                    genre: "Sci-Fi",
-                    poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
-                    redirectUrl: "https://www.imdb.com/title/tt1375666/",
+                    title: "Oppenheimer",
+                    year: 2023,
+                    rating: 8.4,
+                    genre: "Biography",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt15398776/",
                     featured: true
                 },
                 {
-                    title: "The Dark Knight",
-                    year: 2008,
-                    rating: 9.0,
-                    genre: "Action",
-                    poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
-                    redirectUrl: "https://www.imdb.com/title/tt0468569/",
+                    title: "Barbie",
+                    year: 2023,
+                    rating: 7.0,
+                    genre: "Comedy",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt1517268/",
                     featured: true
+                },
+                {
+                    title: "Spider-Man: Across the Spider-Verse",
+                    year: 2023,
+                    rating: 8.7,
+                    genre: "Animation",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt9362722/",
+                    featured: true
+                },
+                {
+                    title: "Dune",
+                    year: 2021,
+                    rating: 8.0,
+                    genre: "Sci-Fi",
+                    poster: "https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg5YzYtYThlMGVjNzE1OGViXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt1160419/",
+                    featured: true
+                },
+                {
+                    title: "Everything Everywhere All at Once",
+                    year: 2022,
+                    rating: 7.9,
+                    genre: "Action",
+                    poster: "https://m.media-amazon.com/images/M/MV5BYTdiOTIyZTQtNmQ1OS00NjZlLWIyMTgtYzk5Y2M3ZDVmMDk1XkEyXkFqcGdeQXVyMTAzMDg4NzU0._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt6710474/",
+                    featured: true
+                },
+                {
+                    title: "Top Gun: Maverick",
+                    year: 2022,
+                    rating: 8.3,
+                    genre: "Action",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZWYzOGEwNTgtNWU3NS00ZTQ0LWJkODUtMmVhMjIwMjA1ZmQwXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt1745960/",
+                    featured: true
+                },
+                {
+                    title: "The Batman",
+                    year: 2022,
+                    rating: 7.8,
+                    genre: "Action",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMDdmMTBiNTYtMDIzNi00NGVlLWIzMDYtZTk3MTQ3NGQxZGEwXkEyXkFqcGdeQXVyMzMwOTU5MDk@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt1877830/",
+                    featured: false
+                },
+                {
+                    title: "Avatar: The Way of Water",
+                    year: 2022,
+                    rating: 7.6,
+                    genre: "Sci-Fi",
+                    poster: "https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt1630029/",
+                    featured: true
+                },
+                {
+                    title: "RRR",
+                    year: 2022,
+                    rating: 7.8,
+                    genre: "Action",
+                    poster: "https://m.media-amazon.com/images/M/MV5BODUwNDNjYzctODUxNy00ZTA2LWIyYTEtMDc5Y2E5ZjBmNTMzXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt8178634/",
+                    featured: true
+                },
+                {
+                    title: "The Whale",
+                    year: 2022,
+                    rating: 7.7,
+                    genre: "Drama",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZDQ4Njg4YTctNGZkYi00NWU1LWI4OTYtNmNjOWMyMjI1NWYzXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_.jpg",
+                    redirectUrl: "https://www.imdb.com/title/tt13833688/",
+                    featured: false
                 }
             ];
             await Movie.insertMany(sampleMovies, { ordered: false });
-            console.log('Sample data initialized');
+            console.log('Sample data initialized with recent popular movies');
         }
     } catch (error) {
         console.error('Error initializing data:', error);
@@ -196,6 +268,27 @@ app.delete('/api/movies/:id', async (req, res) => {
     } catch (error) {
         console.error('Error deleting movie:', error);
         res.status(500).json({ message: 'Error deleting movie', error: error.message });
+    }
+});
+
+// Update movie route
+app.put('/api/movies/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await Movie.findByIdAndUpdate(
+            id,
+            req.body,
+            { new: true, runValidators: true }
+        );
+        if (!result) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
+        // Clear cache when movie is updated
+        cache.clear();
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error updating movie:', error);
+        res.status(500).json({ message: 'Error updating movie', error: error.message });
     }
 });
 

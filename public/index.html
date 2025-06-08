@@ -429,44 +429,68 @@
 
         /* Admin Panel Styles */
         .admin-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            padding: 20px;
         }
 
         .admin-content {
-            background: var(--card-bg);
-            border-radius: 15px;
+            background: var(--admin-bg);
             padding: 30px;
+            border-radius: 8px;
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            animation: modalFadeIn 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2d2f36;
         }
 
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+
+        .submit-btn, .cancel-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #00a028;
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
         }
 
         .close-admin {
@@ -1090,9 +1114,14 @@
                     <label for="moviePinned">Pin to Top</label>
                 </div>
                 
-                <button type="submit" class="admin-btn">
-                    <i class="fas fa-plus"></i> Add Movie
-                </button>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelAddMovie">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-save"></i> Save Movie
+                    </button>
+                </div>
             </form>
             
             <div class="spinner" id="spinner"></div>
@@ -1411,7 +1440,7 @@
             };
 
             // Validate data
-            if (!movieData.title || !movieData.year || !movieData.rating || !movieData.genre || !movieData.poster || !movieData.redirectUrl) {
+            if (!movieData.title || !movieData.year || !movieData.rating || !movieData.genre || !movieData.poster || !movieData.watchUrl || !movieData.downloadUrl) {
                 showMessage("All fields are required!", "error");
                 return;
             }
@@ -1771,6 +1800,13 @@
                 toggleAdminBtn.classList.remove('active');
                 showMessage("Logged out successfully!", "success");
             }
+        });
+
+        // Add event listener for cancel button
+        document.getElementById('cancelAddMovie').addEventListener('click', () => {
+            adminModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetForm();
         });
 
         // Initial load

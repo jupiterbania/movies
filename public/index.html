@@ -1157,8 +1157,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="editRedirectUrl">Movie Link</label>
-                    <input type="url" id="editRedirectUrl" required>
+                    <label for="editWatchUrl">Watch Movie Link</label>
+                    <input type="url" id="editWatchUrl" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDownloadUrl">Download Movie Link</label>
+                    <input type="url" id="editDownloadUrl" required>
                 </div>
 
                 <div class="checkbox-group">
@@ -1683,7 +1688,8 @@
             document.getElementById('editMovieRating').value = movie.rating;
             document.getElementById('editMovieGenre').value = movie.genre;
             document.getElementById('editPosterUrl').value = movie.poster;
-            document.getElementById('editRedirectUrl').value = movie.redirectUrl;
+            document.getElementById('editWatchUrl').value = movie.watchUrl;
+            document.getElementById('editDownloadUrl').value = movie.downloadUrl;
             document.getElementById('editFeatured').checked = movie.featured;
             document.getElementById('editPinned').checked = movie.pinned;
             
@@ -1706,7 +1712,8 @@
                 rating: parseFloat(document.getElementById('editMovieRating').value),
                 genre: document.getElementById('editMovieGenre').value,
                 poster: document.getElementById('editPosterUrl').value,
-                redirectUrl: document.getElementById('editRedirectUrl').value,
+                watchUrl: document.getElementById('editWatchUrl').value,
+                downloadUrl: document.getElementById('editDownloadUrl').value,
                 featured: document.getElementById('editFeatured').checked,
                 pinned: document.getElementById('editPinned').checked
             };

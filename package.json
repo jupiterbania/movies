@@ -1,0 +1,27 @@
+{
+  "name": "my-movies",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "CinemaBuzz - Movie Collection App",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "mongoose": "^8.15.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "sharp": "^0.34.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

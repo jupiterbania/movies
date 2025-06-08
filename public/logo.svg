@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Dark background with rounded corners -->
+    <rect width="512" height="512" rx="80" fill="#1a1c23"/>
+    
+    <!-- Video/Movie icon -->
+    <path d="M128 128h256v256h-256v-256z" fill="#00c030"/>
+    <path d="M176 176h160v160h-160v-160z" fill="#1a1c23"/>
+    
+    <!-- Small squares in corners -->
+    <rect x="144" y="144" width="32" height="32" fill="#1a1c23"/>
+    <rect x="336" y="144" width="32" height="32" fill="#1a1c23"/>
+    <rect x="144" y="336" width="32" height="32" fill="#1a1c23"/>
+    <rect x="336" y="336" width="32" height="32" fill="#1a1c23"/>
+</svg> 

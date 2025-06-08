@@ -1145,21 +1145,50 @@
             
             // Get form values
             const movieData = {
-                title: document.getElementById('movieTitle').value,
+                title: document.getElementById('movieTitle').value.trim(),
                 year: parseInt(document.getElementById('movieYear').value),
                 rating: parseFloat(document.getElementById('movieRating').value),
                 genre: document.getElementById('movieGenre').value,
-                poster: document.getElementById('posterUrl').value,
-                redirectUrl: document.getElementById('redirectUrl').value,
+                poster: document.getElementById('posterUrl').value.trim(),
+                redirectUrl: document.getElementById('redirectUrl').value.trim(),
                 featured: true
             };
+
+            // Validate data
+            if (!movieData.title || !movieData.year || !movieData.rating || !movieData.genre || !movieData.poster || !movieData.redirectUrl) {
+                showMessage("All fields are required!", "error");
+                return;
+            }
+
+            if (movieData.year < 1900 || movieData.year > 2099) {
+                showMessage("Year must be between 1900 and 2099!", "error");
+                return;
+            }
+
+            if (movieData.rating < 0 || movieData.rating > 10) {
+                showMessage("Rating must be between 0 and 10!", "error");
+                return;
+            }
             
             // Show loading spinner
             showSpinner();
             adminMessage.style.display = 'none';
             
             try {
-                await addMovie(movieData);
+                const response = await fetch(`${API_URL}/movies`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(movieData),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to add movie');
+                }
+
+                await response.json();
                 
                 // Re-fetch and render all movies
                 await fetchMovies();
@@ -1168,7 +1197,8 @@
                 showMessage("Movie added successfully!", "success");
                 
                 // Reset form
-                resetForm();
+                movieForm.reset();
+                adminMessage.style.display = 'none';
             } catch (error) {
                 showMessage("Error adding movie: " + error.message, "error");
             } finally {

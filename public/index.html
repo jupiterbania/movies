@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<div id="container-9d8b73ea0c07cb5036e792ab3251f0c9"></div>
-    <script type='text/javascript' src='//pl26865309.profitableratecpm.com/09/c9/95/09c9958d4bf1455c0934f9b4059c8331.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaBuzz - Movie Collection</title>
@@ -312,32 +310,43 @@
             border-color: var(--accent);
         }
 
-        /* Admin Panel - Fixed scrolling issue */
+        /* Admin Panel Styles */
         .admin-modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
             justify-content: center;
             align-items: center;
-            overflow: auto;
-            padding: 20px;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
-        .admin-panel {
-            background: var(--admin-bg);
-            width: 90%;
-            max-width: 500px;
+        .admin-content {
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid #2d2f36;
+            width: 90%;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .admin-header {
@@ -345,128 +354,291 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            position: sticky;
-            top: 0;
-            background: var(--admin-bg);
-            padding: 10px 0;
-            z-index: 10;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
         }
 
         .admin-header h2 {
-            color: var(--accent);
+            color: var(--text);
             font-size: 1.8rem;
+            margin: 0;
         }
 
         .close-admin {
             background: none;
             border: none;
             color: var(--text);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 5px;
+            transition: color 0.3s ease;
         }
 
         .close-admin:hover {
             color: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        .admin-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
-            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
             font-weight: 500;
         }
 
-        .form-group input {
-            padding: 12px 15px;
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="url"],
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
             border-radius: 8px;
-            border: 1px solid #2d2f36;
-            background: var(--secondary);
+            background: var(--input-bg);
             color: var(--text);
             font-size: 1rem;
-            outline: none;
+            transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2);
         }
 
-        .admin-form button {
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .admin-btn {
             background: var(--accent);
             color: var(--primary);
             border: none;
-            padding: 12px;
+            padding: 12px 25px;
             border-radius: 8px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
-            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .admin-form button:hover {
-            background: #00d83d;
+        .admin-btn:hover {
+            background: var(--accent-hover);
             transform: translateY(-2px);
         }
 
-        .password-group {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 40px;
-            color: var(--text-secondary);
-            cursor: pointer;
+        .admin-btn i {
+            font-size: 1.1rem;
         }
 
         .admin-message {
-            padding: 10px;
+            margin-top: 20px;
+            padding: 12px;
             border-radius: 8px;
-            margin-top: 15px;
-            text-align: center;
+            font-weight: 500;
             display: none;
         }
 
         .admin-message.success {
-            background: rgba(0, 192, 48, 0.2);
-            color: var(--accent);
-            display: block;
+            background: #2ecc71;
+            color: white;
         }
 
         .admin-message.error {
-            background: rgba(231, 76, 60, 0.2);
-            color: #e74c3c;
-            display: block;
+            background: #e74c3c;
+            color: white;
         }
 
-        /* Loading Spinner */
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--accent);
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(var(--accent-rgb), 0.1);
+            border-left-color: var(--accent);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
             animation: spin 1s linear infinite;
             margin: 20px auto;
             display: none;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Edit Modal Styles */
+        .edit-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .edit-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background: var(--border);
+            color: var(--text);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .cancel-btn:hover {
+            background: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Admin Login Modal Styles */
+        .admin-login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .admin-login-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .admin-login-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .admin-login-header h2 {
+            color: var(--text);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .password-input-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .password-toggle:hover {
+            color: var(--text);
+        }
+
+        .admin-login-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+            text-align: center;
+        }
+
+        .admin-login-message.success {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .admin-login-message.error {
+            background: #e74c3c;
+            color: white;
         }
 
         /* Main Content Area */
@@ -534,29 +706,6 @@
                 padding: 10px 15px;
                 font-size: 0.9rem;
             }
-        }
-
-        /* Admin Panel Styles */
-        .admin-panel select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            background: var(--input-bg);
-            color: var(--text);
-            font-size: 1rem;
-            margin-top: 5px;
-        }
-
-        .admin-panel select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .admin-panel select option {
-            background: var(--input-bg);
-            color: var(--text);
-            padding: 8px;
         }
 
         /* Admin Mode Styles */
@@ -652,83 +801,6 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-        /* Admin Login Modal */
-        .admin-login-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .admin-login-container {
-            background: var(--admin-bg);
-            padding: 30px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid #2d2f36;
-        }
-
-        .admin-login-container h2 {
-            color: var(--text);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .admin-login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .admin-login-form input {
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            background: var(--input-bg);
-            color: var(--text);
-        }
-
-        .admin-login-form button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .admin-login-form button:hover {
-            background: var(--accent-hover);
-        }
-
-        .admin-login-message {
-            text-align: center;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 4px;
-            display: none;
-        }
-
-        .admin-login-message.error {
-            background: rgba(255, 0, 0, 0.1);
-            color: #ff4444;
-        }
-
-        .admin-login-message.success {
-            background: rgba(0, 255, 0, 0.1);
-            color: #44ff44;
-        }
-
         /* Edit Movie Modal */
         .edit-modal {
             display: none;
@@ -760,6 +832,24 @@
             color: var(--text);
             margin-bottom: 20px;
             text-align: center;
+        }
+
+        /* Add these styles to your existing CSS */
+        .pinned-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .pin-icon {
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -821,21 +911,45 @@
         </div>
     </footer>
 
-    <!-- Admin Panel - Fixed scrolling -->
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-panel">
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="admin-login-modal">
+        <div class="admin-login-content">
+            <div class="admin-login-header">
+                <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+            </div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <div class="password-input-group">
+                        <input type="password" id="adminPassword" required>
+                        <button type="button" id="passwordToggle" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="admin-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            <div id="adminLoginMessage" class="admin-login-message"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="admin-modal">
+        <div class="admin-content">
             <div class="admin-header">
-                <h2>Admin Panel</h2>
-                <button class="close-admin" id="closeAdmin">&times;</button>
+                <h2><i class="fas fa-film"></i> Add New Movie</h2>
+                <button id="closeAdmin" class="close-admin">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
-            <form class="admin-form" id="movieForm">
-                <div class="form-group password-group">
-                    <label for="adminPassword">Admin Password</label>
-                    <input type="password" id="adminPassword" placeholder="Enter password" required>
-                    <i class="fas fa-eye password-toggle" id="passwordToggle"></i>
-                </div>
-                
+            <form id="movieForm">
                 <div class="form-group">
                     <label for="movieTitle">Movie Title</label>
                     <input type="text" id="movieTitle" placeholder="Enter movie title" required>
@@ -843,107 +957,148 @@
                 
                 <div class="form-group">
                     <label for="movieYear">Release Year</label>
-                    <input type="number" id="movieYear" placeholder="Enter release year" min="1900" max="2099" required>
+                    <input type="number" id="movieYear" min="1900" max="2099" placeholder="Enter release year" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="movieRating">Rating (0-10)</label>
-                    <input type="number" id="movieRating" placeholder="Enter rating" min="0" max="10" step="0.1" required>
+                    <input type="number" id="movieRating" min="0" max="10" step="0.1" placeholder="Enter rating" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="movieGenre">Genre:</label>
+                    <label for="movieGenre">Genre</label>
                     <select id="movieGenre" required>
                         <option value="">Select a genre</option>
                         <option value="Action">Action</option>
                         <option value="Adventure">Adventure</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Biography">Biography</option>
                         <option value="Comedy">Comedy</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Documentary">Documentary</option>
                         <option value="Drama">Drama</option>
+                        <option value="Family">Family</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Romance">Romance</option>
                         <option value="Sci-Fi">Sci-Fi</option>
                         <option value="Thriller">Thriller</option>
+                        <option value="War">War</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
                     <label for="posterUrl">Poster Image URL</label>
-                    <input type="url" id="posterUrl" placeholder="Enter image URL" required>
+                    <input type="url" id="posterUrl" placeholder="Enter poster image URL" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="redirectUrl">Redirect URL (when clicked)</label>
-                    <input type="url" id="redirectUrl" placeholder="Enter redirect URL" required>
+                    <label for="redirectUrl">Movie Link</label>
+                    <input type="url" id="redirectUrl" placeholder="Enter movie link" required>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="movieFeatured">
+                    <label for="movieFeatured">Featured Movie</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="moviePinned">
+                    <label for="moviePinned">Pin to Top</label>
                 </div>
                 
-                <button type="submit">Add Movie</button>
+                <button type="submit" class="admin-btn">
+                    <i class="fas fa-plus"></i> Add Movie
+                </button>
             </form>
             
             <div class="spinner" id="spinner"></div>
-            <div class="admin-message" id="adminMessage"></div>
-        </div>
-    </div>
-
-    <!-- Admin Login Modal -->
-    <div class="admin-login-modal" id="adminLoginModal">
-        <div class="admin-login-container">
-            <h2>Admin Login</h2>
-            <form class="admin-login-form" id="adminLoginForm">
-                <input type="text" id="adminUsername" placeholder="Username" required>
-                <input type="password" id="adminLoginPassword" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <div class="admin-login-message" id="adminLoginMessage"></div>
+            <div id="adminMessage" class="admin-message"></div>
         </div>
     </div>
 
     <!-- Edit Movie Modal -->
-    <div class="edit-modal" id="editModal">
-        <div class="edit-container">
-            <h2>Edit Movie</h2>
-            <form id="editMovieForm" class="admin-form">
+    <div id="editModal" class="edit-modal">
+        <div class="edit-content">
+            <div class="admin-header">
+                <h2><i class="fas fa-edit"></i> Edit Movie</h2>
+                <button id="closeEditModal" class="close-admin">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="editMovieForm">
                 <input type="hidden" id="editMovieId">
+                
                 <div class="form-group">
-                    <label for="editMovieTitle">Title:</label>
+                    <label for="editMovieTitle">Movie Title</label>
                     <input type="text" id="editMovieTitle" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="editMovieYear">Year:</label>
+                    <label for="editMovieYear">Release Year</label>
                     <input type="number" id="editMovieYear" min="1900" max="2099" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="editMovieRating">Rating:</label>
+                    <label for="editMovieRating">Rating (0-10)</label>
                     <input type="number" id="editMovieRating" min="0" max="10" step="0.1" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="editMovieGenre">Genre:</label>
+                    <label for="editMovieGenre">Genre</label>
                     <select id="editMovieGenre" required>
                         <option value="">Select a genre</option>
                         <option value="Action">Action</option>
                         <option value="Adventure">Adventure</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Biography">Biography</option>
                         <option value="Comedy">Comedy</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Documentary">Documentary</option>
                         <option value="Drama">Drama</option>
+                        <option value="Family">Family</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Romance">Romance</option>
                         <option value="Sci-Fi">Sci-Fi</option>
                         <option value="Thriller">Thriller</option>
+                        <option value="War">War</option>
                     </select>
                 </div>
+                
                 <div class="form-group">
-                    <label for="editPosterUrl">Poster URL:</label>
+                    <label for="editPosterUrl">Poster URL</label>
                     <input type="url" id="editPosterUrl" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="editRedirectUrl">IMDB URL:</label>
+                    <label for="editRedirectUrl">Movie Link</label>
                     <input type="url" id="editRedirectUrl" required>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="editFeatured">
-                        Featured Movie
-                    </label>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editFeatured">
+                    <label for="editFeatured">Featured Movie</label>
                 </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editPinned">
+                    <label for="editPinned">Pin to Top</label>
+                </div>
+                
                 <div class="form-actions">
-                    <button type="submit" class="submit-btn">Update Movie</button>
-                    <button type="button" class="cancel-btn" id="closeEditModal">Cancel</button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-save"></i> Update Movie
+                    </button>
+                    <button type="button" class="cancel-btn" id="closeEditModalBtn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
                 </div>
             </form>
+            
             <div id="editMessage" class="admin-message"></div>
         </div>
     </div>
@@ -1062,7 +1217,7 @@
                 const movieCard = document.createElement('div');
                 movieCard.className = 'movie-card';
                 movieCard.dataset.redirect = movie.redirectUrl;
-                movieCard.dataset.id = movie._id; // Store movie ID in dataset
+                movieCard.dataset.id = movie._id;
                 
                 movieCard.innerHTML = `
                     <div class="admin-controls">
@@ -1070,6 +1225,7 @@
                         <button class="admin-btn delete-btn" title="Delete Movie" data-id="${movie._id}">×</button>
                     </div>
                     ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
+                    ${movie.pinned ? '<div class="pinned-label"><i class="fas fa-thumbtack pin-icon"></i>PINNED</div>' : ''}
                     <div class="movie-poster">
                         <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
                     </div>
@@ -1250,7 +1406,7 @@
         adminLoginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminLoginPassword').value;
+            const password = document.getElementById('adminPassword').value;
 
             if (username === adminCredentials.username && password === adminCredentials.password) {
                 isAdminLoggedIn = true;
@@ -1436,6 +1592,7 @@
             document.getElementById('editPosterUrl').value = movie.poster;
             document.getElementById('editRedirectUrl').value = movie.redirectUrl;
             document.getElementById('editFeatured').checked = movie.featured;
+            document.getElementById('editPinned').checked = movie.pinned;
             
             editModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -1457,7 +1614,8 @@
                 genre: document.getElementById('editMovieGenre').value,
                 poster: document.getElementById('editPosterUrl').value,
                 redirectUrl: document.getElementById('editRedirectUrl').value,
-                featured: document.getElementById('editFeatured').checked
+                featured: document.getElementById('editFeatured').checked,
+                pinned: document.getElementById('editPinned').checked
             };
 
             try {
@@ -1518,7 +1676,5 @@
         // Initial load
         fetchMovies();
     </script>
-<div id="container-9d8b73ea0c07cb5036e792ab3251f0c9"></div>
-    <script type='text/javascript' src='//pl26865349.profitableratecpm.com/d1/d2/b9/d1d2b902540b0a9ac07b6da8487084b5.js'></script>
 </body>
 </html>

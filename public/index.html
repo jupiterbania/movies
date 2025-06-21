@@ -144,11 +144,69 @@
             text-decoration: underline;
         }
 
+        /* Movies Grid Styles */
         .movies-grid {
             margin-top: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 25px;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 1400px) {
+            .movies-grid {
+                grid-template-columns: repeat(6, 1fr); /* Show 6 movies per row on large screens */
+            }
+        }
+
+        @media (max-width: 1399px) and (min-width: 1200px) {
+            .movies-grid {
+                grid-template-columns: repeat(5, 1fr); /* Show 5 movies per row on medium-large screens */
+            }
+        }
+
+        @media (max-width: 1199px) and (min-width: 992px) {
+            .movies-grid {
+                grid-template-columns: repeat(4, 1fr); /* Show 4 movies per row on medium screens */
+            }
+        }
+
+        @media (max-width: 991px) and (min-width: 768px) {
+            .movies-grid {
+                grid-template-columns: repeat(3, 1fr); /* Show 3 movies per row on small-medium screens */
+            }
+        }
+
+        @media (max-width: 767px) and (min-width: 576px) {
+            .movies-grid {
+                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on small screens */
+                gap: 15px;
+                padding: 0 10px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .movies-grid {
+                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on extra small screens */
+                gap: 10px;
+                padding: 0 5px;
+            }
+        }
+
+        .movie-poster {
+            height: 260px; /* Slightly reduced height to fit more movies */
+        }
+
+        @media (max-width: 768px) {
+            .movie-poster {
+                height: 240px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .movie-poster {
+                height: 220px;
+            }
         }
 
         .movie-card {
@@ -431,6 +489,73 @@
             border-color: var(--accent);
             transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Genre Selection Styles */
+        .genre-selection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .genre-checkbox {
+            display: none;
+        }
+
+        .genre-label {
+            background: var(--secondary);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #2d2f36;
+            font-size: 0.9rem;
+        }
+
+        .genre-checkbox:checked + .genre-label {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .genre-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Multiple Genre Display */
+        .movie-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .genre-tag {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Filter Section Update */
+        .filter-section {
+            background: var(--secondary);
+            padding: 15px 5%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn.selected {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
         }
 
         /* Admin Panel Styles */
@@ -967,6 +1092,89 @@
         .pin-icon {
             margin-right: 5px;
         }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            background: var(--secondary);
+            color: var(--text);
+            border: 1px solid #2d2f36;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pagination-btn.active {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .pagination-btn:hover:not(.active):not(.disabled) {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0 15px;
+        }
+
+        @media (max-width: 768px) {
+            .pagination {
+                gap: 8px;
+            }
+
+            .pagination-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+                min-width: 35px;
+            }
+
+            .page-info {
+                font-size: 0.85rem;
+                margin: 0 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pagination {
+                gap: 6px;
+            }
+
+            .pagination-btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+                min-width: 30px;
+            }
+
+            .page-info {
+                font-size: 0.8rem;
+                margin: 0 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -984,7 +1192,7 @@
     </header>
 
     <!-- Filter Section -->
-    <div class="filter-section">
+    <div class="filter-section" id="filterSection">
         <button class="filter-btn active">All</button>
         <button class="filter-btn">Action</button>
         <button class="filter-btn">Adventure</button>
@@ -1013,6 +1221,11 @@
         
         <div class="movies-grid" id="moviesGrid">
             <!-- Movie cards will be generated by JavaScript -->
+        </div>
+
+        <!-- Add Pagination Section -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination buttons will be generated by JavaScript -->
         </div>
     </section>
 
@@ -1100,26 +1313,56 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="movieGenre">Genre</label>
-                    <select id="movieGenre" required>
-                        <option value="">Select a genre</option>
-                        <option value="Action">Action</option>
-                        <option value="Adventure">Adventure</option>
-                        <option value="Animation">Animation</option>
-                        <option value="Biography">Biography</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Crime">Crime</option>
-                        <option value="Documentary">Documentary</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Family">Family</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Horror">Horror</option>
-                        <option value="Mystery">Mystery</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="Thriller">Thriller</option>
-                        <option value="War">War</option>
-                    </select>
+                    <label>Genres (Select Multiple)</label>
+                    <div class="genre-selection">
+                        <input type="checkbox" id="movieGenreAction" class="genre-checkbox" value="Action">
+                        <label for="movieGenreAction" class="genre-label">Action</label>
+
+                        <input type="checkbox" id="movieGenreAdventure" class="genre-checkbox" value="Adventure">
+                        <label for="movieGenreAdventure" class="genre-label">Adventure</label>
+
+                        <input type="checkbox" id="movieGenreAnimation" class="genre-checkbox" value="Animation">
+                        <label for="movieGenreAnimation" class="genre-label">Animation</label>
+
+                        <input type="checkbox" id="movieGenreBiography" class="genre-checkbox" value="Biography">
+                        <label for="movieGenreBiography" class="genre-label">Biography</label>
+
+                        <input type="checkbox" id="movieGenreComedy" class="genre-checkbox" value="Comedy">
+                        <label for="movieGenreComedy" class="genre-label">Comedy</label>
+
+                        <input type="checkbox" id="movieGenreCrime" class="genre-checkbox" value="Crime">
+                        <label for="movieGenreCrime" class="genre-label">Crime</label>
+
+                        <input type="checkbox" id="movieGenreDocumentary" class="genre-checkbox" value="Documentary">
+                        <label for="movieGenreDocumentary" class="genre-label">Documentary</label>
+
+                        <input type="checkbox" id="movieGenreDrama" class="genre-checkbox" value="Drama">
+                        <label for="movieGenreDrama" class="genre-label">Drama</label>
+
+                        <input type="checkbox" id="movieGenreFamily" class="genre-checkbox" value="Family">
+                        <label for="movieGenreFamily" class="genre-label">Family</label>
+
+                        <input type="checkbox" id="movieGenreFantasy" class="genre-checkbox" value="Fantasy">
+                        <label for="movieGenreFantasy" class="genre-label">Fantasy</label>
+
+                        <input type="checkbox" id="movieGenreHorror" class="genre-checkbox" value="Horror">
+                        <label for="movieGenreHorror" class="genre-label">Horror</label>
+
+                        <input type="checkbox" id="movieGenreMystery" class="genre-checkbox" value="Mystery">
+                        <label for="movieGenreMystery" class="genre-label">Mystery</label>
+
+                        <input type="checkbox" id="movieGenreRomance" class="genre-checkbox" value="Romance">
+                        <label for="movieGenreRomance" class="genre-label">Romance</label>
+
+                        <input type="checkbox" id="movieGenreSciFi" class="genre-checkbox" value="Sci-Fi">
+                        <label for="movieGenreSciFi" class="genre-label">Sci-Fi</label>
+
+                        <input type="checkbox" id="movieGenreThriller" class="genre-checkbox" value="Thriller">
+                        <label for="movieGenreThriller" class="genre-label">Thriller</label>
+
+                        <input type="checkbox" id="movieGenreWar" class="genre-checkbox" value="War">
+                        <label for="movieGenreWar" class="genre-label">War</label>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -1281,14 +1524,23 @@
             password: '77861822'
         };
 
-        // Fetch all movies from MongoDB
-        async function fetchMovies() {
+        // Add pagination state
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentSearchTerm = '';
+        let currentGenre = 'All';
+
+        // Fetch all movies with pagination
+        async function fetchMovies(page = 1) {
             try {
                 showSpinner();
-                const response = await fetch(`${API_URL}/movies`);
+                const response = await fetch(`${API_URL}/movies?page=${page}&limit=24`);
                 if (!response.ok) throw new Error('Failed to fetch movies');
                 const data = await response.json();
-                renderMovies(data);
+                renderMovies(data.movies);
+                renderPagination(data.currentPage, data.totalPages);
+                currentPage = data.currentPage;
+                totalPages = data.totalPages;
             } catch (error) {
                 console.error('Error fetching movies:', error);
                 showError('Failed to load movies. Please try again later.');
@@ -1297,14 +1549,17 @@
             }
         }
 
-        // Search movies
-        async function searchMovies(query) {
+        // Search movies with pagination
+        async function searchMovies(query, page = 1) {
             try {
                 showSpinner();
-                const response = await fetch(`${API_URL}/movies/search?query=${encodeURIComponent(query)}`);
+                const response = await fetch(`${API_URL}/movies/search?query=${encodeURIComponent(query)}&page=${page}&limit=24`);
                 if (!response.ok) throw new Error('Failed to search movies');
                 const data = await response.json();
-                renderMovies(data);
+                renderMovies(data.movies);
+                renderPagination(data.currentPage, data.totalPages);
+                currentPage = data.currentPage;
+                totalPages = data.totalPages;
             } catch (error) {
                 console.error('Error searching movies:', error);
                 showError('Search failed. Please try again.');
@@ -1313,18 +1568,21 @@
             }
         }
 
-        // Filter by genre
-        async function filterByGenre(genre) {
+        // Filter by genre with pagination
+        async function filterByGenre(genre, page = 1) {
             try {
                 showSpinner();
                 if (genre === 'All') {
-                    await fetchMovies();
+                    await fetchMovies(page);
                     return;
                 }
-                const response = await fetch(`${API_URL}/movies/genre/${encodeURIComponent(genre)}`);
+                const response = await fetch(`${API_URL}/movies/genre/${encodeURIComponent(genre)}?page=${page}&limit=24`);
                 if (!response.ok) throw new Error('Failed to filter movies');
                 const data = await response.json();
-                renderMovies(data);
+                renderMovies(data.movies);
+                renderPagination(data.currentPage, data.totalPages);
+                currentPage = data.currentPage;
+                totalPages = data.totalPages;
             } catch (error) {
                 console.error('Error filtering movies:', error);
                 showError('Failed to filter movies. Please try again.');
@@ -1368,6 +1626,10 @@
                 movieCard.dataset.redirect = movie.redirectUrl;
                 movieCard.dataset.id = movie._id;
                 
+                const genresHtml = movie.genres.map(genre => 
+                    `<span class="genre-tag">${genre}</span>`
+                ).join('');
+                
                 movieCard.innerHTML = `
                     <div class="admin-controls">
                         <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
@@ -1381,6 +1643,7 @@
                     <div class="movie-info">
                         <div class="movie-title">${movie.title}</div>
                         <div class="movie-year">${movie.year}</div>
+                        <div class="movie-genres">${genresHtml}</div>
                         <div class="movie-rating">
                             <i class="fas fa-star"></i> ${movie.rating}/10
                         </div>
@@ -1431,13 +1694,90 @@
             });
         }
 
+        // Render pagination
+        function renderPagination(currentPage, totalPages) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            // Previous button
+            const prevBtn = createPaginationButton('Previous', currentPage > 1);
+            prevBtn.addEventListener('click', () => handlePageChange(currentPage - 1));
+            pagination.appendChild(prevBtn);
+
+            // First page
+            if (currentPage > 3) {
+                const firstBtn = createPaginationButton('1');
+                firstBtn.addEventListener('click', () => handlePageChange(1));
+                pagination.appendChild(firstBtn);
+
+                if (currentPage > 4) {
+                    const dots = createPaginationButton('...', false, true);
+                    pagination.appendChild(dots);
+                }
+            }
+
+            // Page numbers
+            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+                const pageBtn = createPaginationButton(i.toString(), true, false, i === currentPage);
+                pageBtn.addEventListener('click', () => handlePageChange(i));
+                pagination.appendChild(pageBtn);
+            }
+
+            // Last page
+            if (currentPage < totalPages - 2) {
+                if (currentPage < totalPages - 3) {
+                    const dots = createPaginationButton('...', false, true);
+                    pagination.appendChild(dots);
+                }
+                const lastBtn = createPaginationButton(totalPages.toString());
+                lastBtn.addEventListener('click', () => handlePageChange(totalPages));
+                pagination.appendChild(lastBtn);
+            }
+
+            // Next button
+            const nextBtn = createPaginationButton('Next', currentPage < totalPages);
+            nextBtn.addEventListener('click', () => handlePageChange(currentPage + 1));
+            pagination.appendChild(nextBtn);
+
+            // Page info
+            const pageInfo = document.createElement('div');
+            pageInfo.className = 'page-info';
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            pagination.appendChild(pageInfo);
+        }
+
+        // Create pagination button
+        function createPaginationButton(text, enabled = true, isDots = false, isActive = false) {
+            const button = document.createElement('button');
+            button.className = `pagination-btn${isActive ? ' active' : ''}${!enabled ? ' disabled' : ''}`;
+            button.textContent = text;
+            button.disabled = !enabled || isDots;
+            return button;
+        }
+
+        // Handle page change
+        function handlePageChange(page) {
+            if (currentSearchTerm) {
+                searchMovies(currentSearchTerm, page);
+            } else if (currentGenre !== 'All') {
+                filterByGenre(currentGenre, page);
+            } else {
+                fetchMovies(page);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // Event Listeners
         searchInput.addEventListener('input', debounce(() => {
             const searchTerm = searchInput.value.trim();
+            currentSearchTerm = searchTerm;
+            currentGenre = 'All';
             if (searchTerm) {
-                searchMovies(searchTerm);
+                searchMovies(searchTerm, 1);
             } else {
-                fetchMovies();
+                fetchMovies(1);
             }
         }, 300));
 
@@ -1446,7 +1786,11 @@
             button.addEventListener('click', () => {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-                filterByGenre(button.textContent);
+                const genre = button.textContent;
+                currentGenre = genre;
+                currentSearchTerm = '';
+                searchInput.value = '';
+                filterByGenre(genre, 1);
             });
         });
 
@@ -1459,12 +1803,20 @@
                 return;
             }
             
-            // Get form values
+            // Get selected genres
+            const selectedGenres = Array.from(document.querySelectorAll('.genre-checkbox:checked'))
+                .map(checkbox => checkbox.value);
+
+            if (selectedGenres.length === 0) {
+                showMessage("Please select at least one genre!", "error");
+                return;
+            }
+            
             const movieData = {
                 title: document.getElementById('movieTitle').value.trim(),
                 year: parseInt(document.getElementById('movieYear').value),
                 rating: parseFloat(document.getElementById('movieRating').value),
-                genre: document.getElementById('movieGenre').value,
+                genres: selectedGenres,
                 poster: document.getElementById('posterUrl').value.trim(),
                 watchUrl: document.getElementById('watchUrl').value.trim(),
                 downloadUrl: document.getElementById('downloadUrl').value.trim(),
@@ -1473,7 +1825,7 @@
             };
 
             // Validate data
-            if (!movieData.title || !movieData.year || !movieData.rating || !movieData.genre || !movieData.poster || !movieData.watchUrl || !movieData.downloadUrl) {
+            if (!movieData.title || !movieData.year || !movieData.rating || !movieData.genres || !movieData.poster || !movieData.watchUrl || !movieData.downloadUrl) {
                 showMessage("All fields are required!", "error");
                 return;
             }
@@ -1845,8 +2197,64 @@
             resetForm();
         });
 
+        // Update filter functionality to handle multiple genres
+        const filterSection = document.getElementById('filterSection');
+        let selectedGenres = new Set(['All']);
+
+        filterSection.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('filter-btn')) return;
+            
+            const genre = e.target.textContent;
+            
+            if (genre === 'All') {
+                selectedGenres.clear();
+                selectedGenres.add('All');
+                filterButtons.forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('active');
+            } else {
+                e.target.classList.toggle('selected');
+                if (e.target.classList.contains('selected')) {
+                    selectedGenres.delete('All');
+                    filterButtons[0].classList.remove('active');
+                    selectedGenres.add(genre);
+                } else {
+                    selectedGenres.delete(genre);
+                    if (selectedGenres.size === 0) {
+                        selectedGenres.add('All');
+                        filterButtons[0].classList.add('active');
+                    }
+                }
+            }
+            
+            filterMoviesByGenres(Array.from(selectedGenres));
+        });
+
+        // Function to filter movies by multiple genres
+        async function filterMoviesByGenres(genres) {
+            if (genres.includes('All')) {
+                await fetchMovies(1);
+                return;
+            }
+
+            try {
+                showSpinner();
+                const response = await fetch(`${API_URL}/movies/genre/${encodeURIComponent(genres.join(','))}?page=1&limit=24`);
+                if (!response.ok) throw new Error('Failed to filter movies');
+                const data = await response.json();
+                renderMovies(data.movies);
+                renderPagination(data.currentPage, data.totalPages);
+                currentPage = data.currentPage;
+                totalPages = data.totalPages;
+            } catch (error) {
+                console.error('Error filtering movies:', error);
+                showError('Failed to filter movies. Please try again.');
+            } finally {
+                hideSpinner();
+            }
+        }
+
         // Initial load
-        fetchMovies();
+        fetchMovies(1);
     </script>
 </body>
 </html>

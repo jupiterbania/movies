@@ -2088,8 +2088,84 @@
                 return true;
             } catch (error) {
                 console.error('Error updating movie:', error);
-                throw error;
+                return false;
             }
+        }
+
+        // Function to populate form for editing
+        function populateFormForEdit(movie) {
+            document.getElementById('movieTitle').value = movie.title;
+            document.getElementById('movieYear').value = movie.year;
+            document.getElementById('movieRating').value = movie.rating;
+            document.getElementById('posterUrl').value = movie.poster;
+            document.getElementById('watchUrl').value = movie.watchUrl;
+            document.getElementById('downloadUrl').value = movie.downloadUrl;
+            document.getElementById('movieFeatured').checked = movie.featured;
+            document.getElementById('moviePinned').checked = movie.pinned;
+
+            // Clear all genre checkboxes first
+            document.querySelectorAll('.genre-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Check the genres that the movie has
+            if (Array.isArray(movie.genres)) {
+                movie.genres.forEach(genre => {
+                    const checkbox = document.getElementById(`movieGenre${genre.replace(/[^a-zA-Z0-9]/g, '')}`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+            } else if (movie.genre) {
+                // Handle legacy movies with single genre
+                const checkbox = document.getElementById(`movieGenre${movie.genre.replace(/[^a-zA-Z0-9]/g, '')}`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            }
+
+            // Update form state
+            currentMovieId = movie._id;
+            document.getElementById('submitBtn').textContent = 'Update Movie';
+            document.getElementById('formTitle').textContent = 'Edit Movie';
+            openModal('movieFormModal');
+        }
+
+        // Handle edit button click
+        moviesGrid.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('edit-btn')) {
+                if (!isAdminLoggedIn) {
+                    showMessage("Please login as admin first!", "error");
+                    return;
+                }
+
+                const movieId = e.target.dataset.id;
+                try {
+                    showSpinner();
+                    const response = await fetch(`${API_URL}/movies/${movieId}`);
+                    if (!response.ok) throw new Error('Failed to fetch movie');
+                    const movie = await response.json();
+                    populateFormForEdit(movie);
+                } catch (error) {
+                    console.error('Error fetching movie:', error);
+                    showError('Failed to fetch movie details. Please try again.');
+                } finally {
+                    hideSpinner();
+                }
+            }
+        });
+
+        // Reset form function
+        function resetForm() {
+            movieForm.reset();
+            currentMovieId = null;
+            document.getElementById('submitBtn').textContent = 'Add Movie';
+            document.getElementById('formTitle').textContent = 'Add New Movie';
+            
+            // Uncheck all genre checkboxes
+            document.querySelectorAll('.genre-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
         }
 
         // Edit Modal Functionality

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type='text/javascript' src='//pl26865309.profitableratecpm.com/09/c9/95/09c9958d4bf1455c0934f9b4059c8331.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaBuzz - Movies</title>
@@ -409,23 +408,29 @@
             justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
+            max-width: 100%;
+            overflow-x: auto;
         }
 
         .filter-btn {
             background: var(--secondary);
             color: var(--text);
             border: 1px solid #2d2f36;
-            padding: 8px 20px;
-            border-radius: 30px;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            white-space: nowrap;
+            min-width: fit-content;
         }
 
         .filter-btn.active, .filter-btn:hover {
             background: var(--accent);
             color: var(--primary);
             border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         /* Admin Panel Styles */
@@ -756,7 +761,17 @@
             }
 
             .filter-section {
-                padding: 10px 3%;
+                padding: 12px 3%;
+                gap: 8px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
+            }
+
+            .filter-section::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
             }
 
             .search-container {
@@ -784,12 +799,13 @@
 
         @media (max-width: 480px) {
             .filter-section {
-                padding: 8px 2%;
+                padding: 10px 2%;
+                gap: 6px;
             }
 
             .filter-btn {
-                padding: 6px 12px;
-                font-size: 0.85rem;
+                padding: 5px 12px;
+                font-size: 0.8rem;
             }
 
             .movies-grid {
@@ -972,10 +988,20 @@
         <button class="filter-btn active">All</button>
         <button class="filter-btn">Action</button>
         <button class="filter-btn">Adventure</button>
+        <button class="filter-btn">Animation</button>
+        <button class="filter-btn">Biography</button>
         <button class="filter-btn">Comedy</button>
+        <button class="filter-btn">Crime</button>
+        <button class="filter-btn">Documentary</button>
         <button class="filter-btn">Drama</button>
+        <button class="filter-btn">Family</button>
+        <button class="filter-btn">Fantasy</button>
+        <button class="filter-btn">Horror</button>
+        <button class="filter-btn">Mystery</button>
+        <button class="filter-btn">Romance</button>
         <button class="filter-btn">Sci-Fi</button>
         <button class="filter-btn">Thriller</button>
+        <button class="filter-btn">War</button>
     </div>
 
     <!-- Featured Movies Section -->
@@ -1691,6 +1717,9 @@
         // Edit movie function
         async function editMovie(movieId, movieData) {
             try {
+                // Add updatedAt timestamp to move the movie to top
+                movieData.createdAt = new Date();
+                
                 const response = await fetch(`${API_URL}/movies/${movieId}`, {
                     method: 'PUT',
                     headers: {
@@ -1819,6 +1848,5 @@
         // Initial load
         fetchMovies();
     </script>
-    <script type='text/javascript' src='//pl26865349.profitableratecpm.com/d1/d2/b9/d1d2b902540b0a9ac07b6da8487084b5.js'></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ const movieSchema = new mongoose.Schema({
     title: String,
     year: Number,
     rating: Number,
-    genre: String,
+    genres: [String], // Changed from single genre to array of genres
     poster: String,
     watchUrl: String,
     downloadUrl: String,
@@ -36,8 +36,24 @@ const Movie = mongoose.model('Movie', movieSchema);
 // Get all movies
 app.get('/api/movies', async (req, res) => {
     try {
-        const movies = await Movie.find().sort({ pinned: -1, createdAt: -1 });
-        res.json(movies);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 24; // Changed to 24
+        const skip = (page - 1) * limit;
+
+        const totalMovies = await Movie.countDocuments();
+        const totalPages = Math.ceil(totalMovies / limit);
+        
+        const movies = await Movie.find()
+            .sort({ pinned: -1, createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.json({
+            movies,
+            currentPage: page,
+            totalPages,
+            totalMovies
+        });
     } catch (error) {
         res.status(500).json({ error: 'Error fetching movies' });
     }
@@ -47,13 +63,31 @@ app.get('/api/movies', async (req, res) => {
 app.get('/api/movies/search', async (req, res) => {
     try {
         const query = req.query.query;
-        const movies = await Movie.find({
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 24; // Changed to 24
+        const skip = (page - 1) * limit;
+
+        const searchQuery = {
             $or: [
                 { title: { $regex: query, $options: 'i' } },
-                { genre: { $regex: query, $options: 'i' } }
+                { genres: { $regex: query, $options: 'i' } }
             ]
-        }).sort({ pinned: -1, createdAt: -1 });
-        res.json(movies);
+        };
+
+        const totalMovies = await Movie.countDocuments(searchQuery);
+        const totalPages = Math.ceil(totalMovies / limit);
+
+        const movies = await Movie.find(searchQuery)
+            .sort({ pinned: -1, createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.json({
+            movies,
+            currentPage: page,
+            totalPages,
+            totalMovies
+        });
     } catch (error) {
         res.status(500).json({ error: 'Error searching movies' });
     }
@@ -63,8 +97,25 @@ app.get('/api/movies/search', async (req, res) => {
 app.get('/api/movies/genre/:genre', async (req, res) => {
     try {
         const genre = req.params.genre;
-        const movies = await Movie.find({ genre }).sort({ pinned: -1, createdAt: -1 });
-        res.json(movies);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 24; // Changed to 24
+        const skip = (page - 1) * limit;
+
+        const query = genre === 'All' ? {} : { genres: genre };
+        const totalMovies = await Movie.countDocuments(query);
+        const totalPages = Math.ceil(totalMovies / limit);
+
+        const movies = await Movie.find(query)
+            .sort({ pinned: -1, createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.json({
+            movies,
+            currentPage: page,
+            totalPages,
+            totalMovies
+        });
     } catch (error) {
         res.status(500).json({ error: 'Error filtering movies' });
     }

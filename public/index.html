@@ -1175,6 +1175,102 @@
                 margin: 0 8px;
             }
         }
+
+        /* Movie Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Add styles for genre selection */
+        .genre-selection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: var(--primary);
+            border-radius: 8px;
+        }
+
+        .genre-checkbox {
+            display: none;
+        }
+
+        .genre-label {
+            background: var(--secondary);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #2d2f36;
+            font-size: 0.9rem;
+            user-select: none;
+        }
+
+        .genre-checkbox:checked + .genre-label {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .genre-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Scrollbar styles for genre selection */
+        .genre-selection::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .genre-selection::-webkit-scrollbar-track {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .genre-selection::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .genre-selection::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
     </style>
 </head>
 <body>
@@ -1492,6 +1588,111 @@
             </form>
             
             <div id="editMessage" class="admin-message"></div>
+        </div>
+    </div>
+
+    <!-- Movie Form Modal -->
+    <div id="movieFormModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="formTitle">Add New Movie</h2>
+            <form id="movieForm">
+                <div class="form-group">
+                    <label for="movieTitle">Title</label>
+                    <input type="text" id="movieTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="movieYear">Year</label>
+                    <input type="number" id="movieYear" min="1900" max="2099" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="movieRating">Rating (0-10)</label>
+                    <input type="number" id="movieRating" min="0" max="10" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Genres (Select Multiple)</label>
+                    <div class="genre-selection">
+                        <input type="checkbox" id="movieGenreAction" class="genre-checkbox" value="Action">
+                        <label for="movieGenreAction" class="genre-label">Action</label>
+
+                        <input type="checkbox" id="movieGenreAdventure" class="genre-checkbox" value="Adventure">
+                        <label for="movieGenreAdventure" class="genre-label">Adventure</label>
+
+                        <input type="checkbox" id="movieGenreAnimation" class="genre-checkbox" value="Animation">
+                        <label for="movieGenreAnimation" class="genre-label">Animation</label>
+
+                        <input type="checkbox" id="movieGenreBiography" class="genre-checkbox" value="Biography">
+                        <label for="movieGenreBiography" class="genre-label">Biography</label>
+
+                        <input type="checkbox" id="movieGenreComedy" class="genre-checkbox" value="Comedy">
+                        <label for="movieGenreComedy" class="genre-label">Comedy</label>
+
+                        <input type="checkbox" id="movieGenreCrime" class="genre-checkbox" value="Crime">
+                        <label for="movieGenreCrime" class="genre-label">Crime</label>
+
+                        <input type="checkbox" id="movieGenreDocumentary" class="genre-checkbox" value="Documentary">
+                        <label for="movieGenreDocumentary" class="genre-label">Documentary</label>
+
+                        <input type="checkbox" id="movieGenreDrama" class="genre-checkbox" value="Drama">
+                        <label for="movieGenreDrama" class="genre-label">Drama</label>
+
+                        <input type="checkbox" id="movieGenreFamily" class="genre-checkbox" value="Family">
+                        <label for="movieGenreFamily" class="genre-label">Family</label>
+
+                        <input type="checkbox" id="movieGenreFantasy" class="genre-checkbox" value="Fantasy">
+                        <label for="movieGenreFantasy" class="genre-label">Fantasy</label>
+
+                        <input type="checkbox" id="movieGenreHorror" class="genre-checkbox" value="Horror">
+                        <label for="movieGenreHorror" class="genre-label">Horror</label>
+
+                        <input type="checkbox" id="movieGenreMystery" class="genre-checkbox" value="Mystery">
+                        <label for="movieGenreMystery" class="genre-label">Mystery</label>
+
+                        <input type="checkbox" id="movieGenreRomance" class="genre-checkbox" value="Romance">
+                        <label for="movieGenreRomance" class="genre-label">Romance</label>
+
+                        <input type="checkbox" id="movieGenreSciFi" class="genre-checkbox" value="Sci-Fi">
+                        <label for="movieGenreSciFi" class="genre-label">Sci-Fi</label>
+
+                        <input type="checkbox" id="movieGenreThriller" class="genre-checkbox" value="Thriller">
+                        <label for="movieGenreThriller" class="genre-label">Thriller</label>
+
+                        <input type="checkbox" id="movieGenreWar" class="genre-checkbox" value="War">
+                        <label for="movieGenreWar" class="genre-label">War</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="posterUrl">Poster URL</label>
+                    <input type="url" id="posterUrl" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="watchUrl">Watch URL</label>
+                    <input type="url" id="watchUrl" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="downloadUrl">Download URL</label>
+                    <input type="url" id="downloadUrl" required>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <div>
+                        <input type="checkbox" id="movieFeatured">
+                        <label for="movieFeatured">Featured</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="moviePinned">
+                        <label for="moviePinned">Pinned</label>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn">Add Movie</button>
+            </form>
         </div>
     </div>
 
@@ -1824,53 +2025,32 @@
                 pinned: document.getElementById('moviePinned').checked
             };
 
-            // Validate data
-            if (!movieData.title || !movieData.year || !movieData.rating || !movieData.genres || !movieData.poster || !movieData.watchUrl || !movieData.downloadUrl) {
-                showMessage("All fields are required!", "error");
-                return;
-            }
-
-            if (movieData.year < 1900 || movieData.year > 2099) {
-                showMessage("Year must be between 1900 and 2099!", "error");
-                return;
-            }
-
-            if (movieData.rating < 0 || movieData.rating > 10) {
-                showMessage("Rating must be between 0 and 10!", "error");
-                return;
-            }
-            
-            // Show loading spinner
-            showSpinner();
-            adminMessage.style.display = 'none';
-            
             try {
-                const response = await fetch(`${API_URL}/movies`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(movieData),
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to add movie');
+                showSpinner();
+                let success;
+                
+                if (currentMovieId) {
+                    // Edit existing movie
+                    success = await editMovie(currentMovieId, movieData);
+                    if (success) {
+                        showMessage("Movie updated successfully!", "success");
+                    }
+                } else {
+                    // Add new movie
+                    success = await addMovie(movieData);
+                    if (success) {
+                        showMessage("Movie added successfully!", "success");
+                    }
                 }
-
-                await response.json();
                 
-                // Re-fetch and render all movies
-                await fetchMovies();
-                
-                // Show success message
-                showMessage("Movie added successfully!", "success");
-                
-                // Reset form
-                movieForm.reset();
-                adminMessage.style.display = 'none';
+                if (success) {
+                    closeModal('movieFormModal');
+                    resetForm();
+                    await fetchMovies();
+                }
             } catch (error) {
-                showMessage("Error adding movie: " + error.message, "error");
+                console.error('Error:', error);
+                showError('Failed to save movie. Please try again.');
             } finally {
                 hideSpinner();
             }
@@ -1966,10 +2146,14 @@
 
         function resetForm() {
             movieForm.reset();
-            adminPassword.type = 'password';
-            passwordToggle.classList.remove('fa-eye-slash');
-            passwordToggle.classList.add('fa-eye');
-            adminMessage.style.display = 'none';
+            currentMovieId = null;
+            document.getElementById('submitBtn').textContent = 'Add Movie';
+            document.getElementById('formTitle').textContent = 'Add New Movie';
+            
+            // Uncheck all genre checkboxes
+            document.querySelectorAll('.genre-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
         }
 
         function showSpinner() {
@@ -2094,14 +2278,14 @@
 
         // Function to populate form for editing
         function populateFormForEdit(movie) {
-            document.getElementById('movieTitle').value = movie.title;
-            document.getElementById('movieYear').value = movie.year;
-            document.getElementById('movieRating').value = movie.rating;
-            document.getElementById('posterUrl').value = movie.poster;
-            document.getElementById('watchUrl').value = movie.watchUrl;
-            document.getElementById('downloadUrl').value = movie.downloadUrl;
-            document.getElementById('movieFeatured').checked = movie.featured;
-            document.getElementById('moviePinned').checked = movie.pinned;
+            document.getElementById('movieTitle').value = movie.title || '';
+            document.getElementById('movieYear').value = movie.year || '';
+            document.getElementById('movieRating').value = movie.rating || '';
+            document.getElementById('posterUrl').value = movie.poster || '';
+            document.getElementById('watchUrl').value = movie.watchUrl || '';
+            document.getElementById('downloadUrl').value = movie.downloadUrl || '';
+            document.getElementById('movieFeatured').checked = movie.featured || false;
+            document.getElementById('moviePinned').checked = movie.pinned || false;
 
             // Clear all genre checkboxes first
             document.querySelectorAll('.genre-checkbox').forEach(checkbox => {
@@ -2109,25 +2293,20 @@
             });
 
             // Check the genres that the movie has
-            if (Array.isArray(movie.genres)) {
-                movie.genres.forEach(genre => {
-                    const checkbox = document.getElementById(`movieGenre${genre.replace(/[^a-zA-Z0-9]/g, '')}`);
-                    if (checkbox) {
-                        checkbox.checked = true;
-                    }
-                });
-            } else if (movie.genre) {
-                // Handle legacy movies with single genre
-                const checkbox = document.getElementById(`movieGenre${movie.genre.replace(/[^a-zA-Z0-9]/g, '')}`);
+            const genres = Array.isArray(movie.genres) ? movie.genres : [movie.genre].filter(Boolean);
+            genres.forEach(genre => {
+                const checkbox = document.getElementById(`movieGenre${genre.replace(/[^a-zA-Z0-9]/g, '')}`);
                 if (checkbox) {
                     checkbox.checked = true;
                 }
-            }
+            });
 
             // Update form state
             currentMovieId = movie._id;
             document.getElementById('submitBtn').textContent = 'Update Movie';
             document.getElementById('formTitle').textContent = 'Edit Movie';
+            
+            // Show the modal
             openModal('movieFormModal');
         }
 

@@ -121,6 +121,19 @@ app.get('/api/movies/genre/:genre', async (req, res) => {
     }
 });
 
+// Get single movie by ID
+app.get('/api/movies/:id', async (req, res) => {
+    try {
+        const movie = await Movie.findById(req.params.id);
+        if (!movie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+        res.json(movie);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching movie' });
+    }
+});
+
 // Add new movie
 app.post('/api/movies', async (req, res) => {
     try {

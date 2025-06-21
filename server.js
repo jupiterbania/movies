@@ -84,9 +84,14 @@ app.post('/api/movies', async (req, res) => {
 // Update movie
 app.put('/api/movies/:id', async (req, res) => {
     try {
+        const updateData = {
+            ...req.body,
+            createdAt: new Date() // Ensure createdAt is updated
+        };
+        
         const movie = await Movie.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updateData,
             { new: true }
         );
         res.json(movie);

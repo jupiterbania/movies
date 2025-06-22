@@ -148,8 +148,10 @@ app.post('/api/movies', async (req, res) => {
 // Update movie
 app.put('/api/movies/:id', async (req, res) => {
     try {
+        // Ensure genres is an array
         const updateData = {
             ...req.body,
+            genres: Array.isArray(req.body.genres) ? req.body.genres : [req.body.genre].filter(Boolean),
             createdAt: new Date() // Ensure createdAt is updated
         };
         
@@ -160,6 +162,7 @@ app.put('/api/movies/:id', async (req, res) => {
         );
         res.json(movie);
     } catch (error) {
+        console.error('Error updating movie:', error);
         res.status(400).json({ error: 'Error updating movie' });
     }
 });

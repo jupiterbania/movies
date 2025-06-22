@@ -137,11 +137,19 @@ app.get('/api/movies/:id', async (req, res) => {
 // Add new movie
 app.post('/api/movies', async (req, res) => {
     try {
-        const movie = new Movie(req.body);
+        // Ensure genres is an array
+        const movieData = {
+            ...req.body,
+            genres: Array.isArray(req.body.genres) ? req.body.genres : [req.body.genre].filter(Boolean),
+            createdAt: new Date()
+        };
+
+        const movie = new Movie(movieData);
         await movie.save();
         res.status(201).json(movie);
     } catch (error) {
-        res.status(400).json({ error: 'Error adding movie' });
+        console.error('Error adding movie:', error);
+        res.status(400).json({ error: 'Error adding movie: ' + error.message });
     }
 });
 

@@ -1392,7 +1392,7 @@
                 </button>
             </div>
             
-            <form id="movieForm">
+            <form id="addMovieForm">
                 <div class="form-group">
                     <label for="movieTitle">Movie Title</label>
                     <input type="text" id="movieTitle" placeholder="Enter movie title" required>
@@ -1630,7 +1630,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="formTitle">Add New Movie</h2>
-            <form id="movieForm">
+            <form id="addMovieForm">
                 <div class="form-group">
                     <label for="movieTitle">Title</label>
                     <input type="text" id="movieTitle" required>
@@ -1743,7 +1743,7 @@
         const adminBtn = document.getElementById('adminBtn');
         const adminModal = document.getElementById('adminModal');
         const closeAdmin = document.getElementById('closeAdmin');
-        const movieForm = document.getElementById('movieForm');
+        const addMovieForm = document.getElementById('addMovieForm');
         const passwordToggle = document.getElementById('passwordToggle');
         const adminPassword = document.getElementById('adminPassword');
         const adminMessage = document.getElementById('adminMessage');
@@ -1836,11 +1836,14 @@
                     },
                     body: JSON.stringify(movieData),
                 });
+                
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to add movie');
+                    throw new Error(errorData.error || 'Failed to add movie');
                 }
-                return await response.json();
+                
+                const result = await response.json();
+                return result;
             } catch (error) {
                 console.error('Error adding movie:', error);
                 throw error;
@@ -2030,16 +2033,16 @@
         });
 
         // Handle form submission
-        movieForm.addEventListener('submit', async (e) => {
+        addMovieForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             if (!isAdminLoggedIn) {
                 showMessage("Please login as admin first!", "error");
                 return;
             }
-            
+
             // Get selected genres
-            const selectedGenres = Array.from(document.querySelectorAll('.genre-checkbox:checked'))
+            const selectedGenres = Array.from(document.querySelectorAll('#addMovieForm .genre-checkbox:checked'))
                 .map(checkbox => checkbox.value);
 
             if (selectedGenres.length === 0) {
@@ -2061,30 +2064,17 @@
 
             try {
                 showSpinner();
-                let success;
-                
-                if (currentMovieId) {
-                    // Edit existing movie
-                    success = await editMovie(currentMovieId, movieData);
-                    if (success) {
-                        showMessage("Movie updated successfully!", "success");
-                    }
-                } else {
-                    // Add new movie
-                    success = await addMovie(movieData);
-                    if (success) {
-                        showMessage("Movie added successfully!", "success");
-                    }
-                }
-                
-                if (success) {
-                    closeModal('movieFormModal');
+                const result = await addMovie(movieData);
+                if (result) {
+                    showMessage("Movie added successfully!", "success");
+                    adminModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
                     resetForm();
                     await fetchMovies();
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showError('Failed to save movie. Please try again.');
+                showMessage(error.message || 'Failed to save movie. Please try again.', "error");
             } finally {
                 hideSpinner();
             }
@@ -2179,7 +2169,7 @@
         }
 
         function resetForm() {
-            movieForm.reset();
+            addMovieForm.reset();
             currentMovieId = null;
             document.getElementById('submitBtn').textContent = 'Add Movie';
             document.getElementById('formTitle').textContent = 'Add New Movie';

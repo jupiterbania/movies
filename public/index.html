@@ -205,26 +205,17 @@
 
         @media (max-width: 767px) and (min-width: 576px) {
             .movies-grid {
-                grid-template-columns: repeat(1, 1fr); /* Show 1 movie per row on small screens */
-                gap: 20px;
-                padding: 0 15px;
-            }
-
-            .movie-card {
-                max-width: 500px;
-                margin: 0 auto;
+                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on small screens */
+                gap: 15px;
+                padding: 0 10px;
             }
         }
 
         @media (max-width: 575px) {
             .movies-grid {
-                grid-template-columns: repeat(1, 1fr); /* Show 1 movie per row on extra small screens */
-                gap: 15px;
-                padding: 0 10px;
-            }
-
-            .movie-card {
-                max-width: 100%;
+                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on extra small screens */
+                gap: 10px;
+                padding: 0 5px;
             }
         }
 
@@ -271,36 +262,39 @@
 
         @media (max-width: 767px) {
             .movie-card {
+                border-radius: 12px;
                 display: flex;
-                flex-direction: row;
-                align-items: stretch;
-                border-radius: 15px;
+                flex-direction: column;
             }
 
             .movie-poster {
-                width: 40%;
-                min-width: 140px;
+                width: 100%;
                 height: auto;
-                border-radius: 15px 0 0 15px;
+                border-radius: 12px 12px 0 0;
             }
 
             .movie-info {
-                width: 60%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding: 15px;
+                width: 100%;
+                padding: 10px;
             }
 
             .movie-title {
-                font-size: 1.2rem;
-                margin-bottom: 8px;
-                white-space: normal;
-                line-height: 1.4;
+                font-size: 1rem;
+                margin-bottom: 5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .movie-genres {
-                margin-top: 10px;
+                margin-top: 5px;
+            }
+
+            .movie-genre {
+                font-size: 0.7rem;
+                padding: 2px 6px;
+                margin-right: 4px;
+                margin-bottom: 4px;
             }
         }
 

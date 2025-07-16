@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -209,12 +209,13 @@
             }
         }
 
+        /* Make sure movie card has proper positioning */
         .movie-card {
+            position: relative;
             background: var(--card-bg);
             border-radius: 12px;
-            overflow: hidden;
+            overflow: visible;
             transition: all 0.3s ease;
-            position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             cursor: pointer;
         }
@@ -1271,6 +1272,95 @@
         .genre-selection::-webkit-scrollbar-thumb:hover {
             background: var(--accent-hover);
         }
+
+        /* Update the Kebab Menu Styles */
+        .kebab-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Changed from left to right */
+            z-index: 999; /* Increased z-index */
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 8px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .kebab-menu i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .kebab-menu:hover {
+            background: rgba(0, 0, 0, 0.95);
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Update Streaming Options Menu */
+        .streaming-options {
+            position: absolute;
+            top: 45px;
+            right: 0; /* Changed from left to right */
+            background: rgba(16, 16, 16, 0.98);
+            border-radius: 8px;
+            padding: 8px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .streaming-option {
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .streaming-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .streaming-option i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .streaming-option span {
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        /* Platform-specific colors - make them brighter */
+        .netflix { color: #E50914; }
+        .hotstar { color: #1F80E0; }
+        .prime { color: #00A8E1; }
+        .hulu { color: #1CE783; }
+        .hbomax { color: #A660FF; }
+        .peacock { color: #00C4FF; }
+
+        .streaming-option:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Make sure the movie card has proper positioning */
+        .movie-card {
+            position: relative;
+            overflow: visible !important;
+        }
     </style>
 </head>
 <body>
@@ -1289,23 +1379,7 @@
 
     <!-- Filter Section -->
     <div class="filter-section" id="filterSection">
-        <button class="filter-btn active">All</button>
-        <button class="filter-btn">Action</button>
-        <button class="filter-btn">Adventure</button>
-        <button class="filter-btn">Animation</button>
-        <button class="filter-btn">Biography</button>
-        <button class="filter-btn">Comedy</button>
-        <button class="filter-btn">Crime</button>
-        <button class="filter-btn">Documentary</button>
-        <button class="filter-btn">Drama</button>
-        <button class="filter-btn">Family</button>
-        <button class="filter-btn">Fantasy</button>
-        <button class="filter-btn">Horror</button>
-        <button class="filter-btn">Mystery</button>
-        <button class="filter-btn">Romance</button>
-        <button class="filter-btn">Sci-Fi</button>
-        <button class="filter-btn">Thriller</button>
-        <button class="filter-btn">War</button>
+        <!-- Genre filter buttons removed -->
     </div>
 
     <!-- Featured Movies Section -->
@@ -1332,19 +1406,12 @@
             <a href="#">Movies</a>
             <a href="#">TV Shows</a>
             <a href="#">Request</a>
-            <a href="#">FAQ</a>
+            <a href="#" id="faqAdminLink">FAQ</a>
             <a href="#">DMCA</a>
             <a href="#">Contact</a>
         </div>
         <p class="copyright">© 2023 CinemaBuzz. All rights reserved. This site does not store any files on its server.</p>
         
-        <!-- Admin Button at Bottom -->
-        <div class="admin-container">
-            <button class="admin-btn" id="adminBtn">
-                <i class="fas fa-shield-alt"></i>
-                <span>Admin Panel</span>
-            </button>
-        </div>
     </footer>
 
     <!-- Admin Login Modal -->
@@ -1384,7 +1451,6 @@
         <div class="admin-content">
             <div class="admin-header">
                 <h2>
-                    <i class="fas fa-film"></i>
                     Add New Movie
                 </h2>
                 <button id="closeAdmin" class="close-admin">
@@ -1396,69 +1462,6 @@
                 <div class="form-group">
                     <label for="movieTitle">Movie Title</label>
                     <input type="text" id="movieTitle" placeholder="Enter movie title" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="movieYear">Release Year</label>
-                    <input type="number" id="movieYear" min="1900" max="2099" placeholder="Enter release year" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="movieRating">Rating (0-10)</label>
-                    <input type="number" id="movieRating" min="0" max="10" step="0.1" placeholder="Enter rating" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Genres (Select Multiple)</label>
-                    <div class="genre-selection">
-                        <input type="checkbox" id="movieGenreAction" class="genre-checkbox" value="Action">
-                        <label for="movieGenreAction" class="genre-label">Action</label>
-
-                        <input type="checkbox" id="movieGenreAdventure" class="genre-checkbox" value="Adventure">
-                        <label for="movieGenreAdventure" class="genre-label">Adventure</label>
-
-                        <input type="checkbox" id="movieGenreAnimation" class="genre-checkbox" value="Animation">
-                        <label for="movieGenreAnimation" class="genre-label">Animation</label>
-
-                        <input type="checkbox" id="movieGenreBiography" class="genre-checkbox" value="Biography">
-                        <label for="movieGenreBiography" class="genre-label">Biography</label>
-
-                        <input type="checkbox" id="movieGenreComedy" class="genre-checkbox" value="Comedy">
-                        <label for="movieGenreComedy" class="genre-label">Comedy</label>
-
-                        <input type="checkbox" id="movieGenreCrime" class="genre-checkbox" value="Crime">
-                        <label for="movieGenreCrime" class="genre-label">Crime</label>
-
-                        <input type="checkbox" id="movieGenreDocumentary" class="genre-checkbox" value="Documentary">
-                        <label for="movieGenreDocumentary" class="genre-label">Documentary</label>
-
-                        <input type="checkbox" id="movieGenreDrama" class="genre-checkbox" value="Drama">
-                        <label for="movieGenreDrama" class="genre-label">Drama</label>
-
-                        <input type="checkbox" id="movieGenreFamily" class="genre-checkbox" value="Family">
-                        <label for="movieGenreFamily" class="genre-label">Family</label>
-
-                        <input type="checkbox" id="movieGenreFantasy" class="genre-checkbox" value="Fantasy">
-                        <label for="movieGenreFantasy" class="genre-label">Fantasy</label>
-
-                        <input type="checkbox" id="movieGenreHorror" class="genre-checkbox" value="Horror">
-                        <label for="movieGenreHorror" class="genre-label">Horror</label>
-
-                        <input type="checkbox" id="movieGenreMystery" class="genre-checkbox" value="Mystery">
-                        <label for="movieGenreMystery" class="genre-label">Mystery</label>
-
-                        <input type="checkbox" id="movieGenreRomance" class="genre-checkbox" value="Romance">
-                        <label for="movieGenreRomance" class="genre-label">Romance</label>
-
-                        <input type="checkbox" id="movieGenreSciFi" class="genre-checkbox" value="Sci-Fi">
-                        <label for="movieGenreSciFi" class="genre-label">Sci-Fi</label>
-
-                        <input type="checkbox" id="movieGenreThriller" class="genre-checkbox" value="Thriller">
-                        <label for="movieGenreThriller" class="genre-label">Thriller</label>
-
-                        <input type="checkbox" id="movieGenreWar" class="genre-checkbox" value="War">
-                        <label for="movieGenreWar" class="genre-label">War</label>
-                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -1523,69 +1526,6 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="editMovieYear">Release Year</label>
-                    <input type="number" id="editMovieYear" min="1900" max="2099" placeholder="Enter release year" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="editMovieRating">Rating (0-10)</label>
-                    <input type="number" id="editMovieRating" min="0" max="10" step="0.1" placeholder="Enter rating" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Genres (Select Multiple)</label>
-                    <div class="genre-selection">
-                        <input type="checkbox" id="editMovieGenreAction" class="genre-checkbox" value="Action">
-                        <label for="editMovieGenreAction" class="genre-label">Action</label>
-
-                        <input type="checkbox" id="editMovieGenreAdventure" class="genre-checkbox" value="Adventure">
-                        <label for="editMovieGenreAdventure" class="genre-label">Adventure</label>
-
-                        <input type="checkbox" id="editMovieGenreAnimation" class="genre-checkbox" value="Animation">
-                        <label for="editMovieGenreAnimation" class="genre-label">Animation</label>
-
-                        <input type="checkbox" id="editMovieGenreBiography" class="genre-checkbox" value="Biography">
-                        <label for="editMovieGenreBiography" class="genre-label">Biography</label>
-
-                        <input type="checkbox" id="editMovieGenreComedy" class="genre-checkbox" value="Comedy">
-                        <label for="editMovieGenreComedy" class="genre-label">Comedy</label>
-
-                        <input type="checkbox" id="editMovieGenreCrime" class="genre-checkbox" value="Crime">
-                        <label for="editMovieGenreCrime" class="genre-label">Crime</label>
-
-                        <input type="checkbox" id="editMovieGenreDocumentary" class="genre-checkbox" value="Documentary">
-                        <label for="editMovieGenreDocumentary" class="genre-label">Documentary</label>
-
-                        <input type="checkbox" id="editMovieGenreDrama" class="genre-checkbox" value="Drama">
-                        <label for="editMovieGenreDrama" class="genre-label">Drama</label>
-
-                        <input type="checkbox" id="editMovieGenreFamily" class="genre-checkbox" value="Family">
-                        <label for="editMovieGenreFamily" class="genre-label">Family</label>
-
-                        <input type="checkbox" id="editMovieGenreFantasy" class="genre-checkbox" value="Fantasy">
-                        <label for="editMovieGenreFantasy" class="genre-label">Fantasy</label>
-
-                        <input type="checkbox" id="editMovieGenreHorror" class="genre-checkbox" value="Horror">
-                        <label for="editMovieGenreHorror" class="genre-label">Horror</label>
-
-                        <input type="checkbox" id="editMovieGenreMystery" class="genre-checkbox" value="Mystery">
-                        <label for="editMovieGenreMystery" class="genre-label">Mystery</label>
-
-                        <input type="checkbox" id="editMovieGenreRomance" class="genre-checkbox" value="Romance">
-                        <label for="editMovieGenreRomance" class="genre-label">Romance</label>
-
-                        <input type="checkbox" id="editMovieGenreSciFi" class="genre-checkbox" value="Sci-Fi">
-                        <label for="editMovieGenreSciFi" class="genre-label">Sci-Fi</label>
-
-                        <input type="checkbox" id="editMovieGenreThriller" class="genre-checkbox" value="Thriller">
-                        <label for="editMovieGenreThriller" class="genre-label">Thriller</label>
-
-                        <input type="checkbox" id="editMovieGenreWar" class="genre-checkbox" value="War">
-                        <label for="editMovieGenreWar" class="genre-label">War</label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
                     <label for="editPosterUrl">Poster Image URL</label>
                     <input type="url" id="editPosterUrl" placeholder="Enter poster image URL" required>
                 </div>
@@ -1634,69 +1574,6 @@
                 <div class="form-group">
                     <label for="movieTitle">Title</label>
                     <input type="text" id="movieTitle" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="movieYear">Year</label>
-                    <input type="number" id="movieYear" min="1900" max="2099" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="movieRating">Rating (0-10)</label>
-                    <input type="number" id="movieRating" min="0" max="10" step="0.1" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Genres (Select Multiple)</label>
-                    <div class="genre-selection">
-                        <input type="checkbox" id="movieGenreAction" class="genre-checkbox" value="Action">
-                        <label for="movieGenreAction" class="genre-label">Action</label>
-
-                        <input type="checkbox" id="movieGenreAdventure" class="genre-checkbox" value="Adventure">
-                        <label for="movieGenreAdventure" class="genre-label">Adventure</label>
-
-                        <input type="checkbox" id="movieGenreAnimation" class="genre-checkbox" value="Animation">
-                        <label for="movieGenreAnimation" class="genre-label">Animation</label>
-
-                        <input type="checkbox" id="movieGenreBiography" class="genre-checkbox" value="Biography">
-                        <label for="movieGenreBiography" class="genre-label">Biography</label>
-
-                        <input type="checkbox" id="movieGenreComedy" class="genre-checkbox" value="Comedy">
-                        <label for="movieGenreComedy" class="genre-label">Comedy</label>
-
-                        <input type="checkbox" id="movieGenreCrime" class="genre-checkbox" value="Crime">
-                        <label for="movieGenreCrime" class="genre-label">Crime</label>
-
-                        <input type="checkbox" id="movieGenreDocumentary" class="genre-checkbox" value="Documentary">
-                        <label for="movieGenreDocumentary" class="genre-label">Documentary</label>
-
-                        <input type="checkbox" id="movieGenreDrama" class="genre-checkbox" value="Drama">
-                        <label for="movieGenreDrama" class="genre-label">Drama</label>
-
-                        <input type="checkbox" id="movieGenreFamily" class="genre-checkbox" value="Family">
-                        <label for="movieGenreFamily" class="genre-label">Family</label>
-
-                        <input type="checkbox" id="movieGenreFantasy" class="genre-checkbox" value="Fantasy">
-                        <label for="movieGenreFantasy" class="genre-label">Fantasy</label>
-
-                        <input type="checkbox" id="movieGenreHorror" class="genre-checkbox" value="Horror">
-                        <label for="movieGenreHorror" class="genre-label">Horror</label>
-
-                        <input type="checkbox" id="movieGenreMystery" class="genre-checkbox" value="Mystery">
-                        <label for="movieGenreMystery" class="genre-label">Mystery</label>
-
-                        <input type="checkbox" id="movieGenreRomance" class="genre-checkbox" value="Romance">
-                        <label for="movieGenreRomance" class="genre-label">Romance</label>
-
-                        <input type="checkbox" id="movieGenreSciFi" class="genre-checkbox" value="Sci-Fi">
-                        <label for="movieGenreSciFi" class="genre-label">Sci-Fi</label>
-
-                        <input type="checkbox" id="movieGenreThriller" class="genre-checkbox" value="Thriller">
-                        <label for="movieGenreThriller" class="genre-label">Thriller</label>
-
-                        <input type="checkbox" id="movieGenreWar" class="genre-checkbox" value="War">
-                        <label for="movieGenreWar" class="genre-label">War</label>
-                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -1751,6 +1628,7 @@
         const adminLoginModal = document.getElementById('adminLoginModal');
         const adminLoginForm = document.getElementById('adminLoginForm');
         const adminLoginMessage = document.getElementById('adminLoginMessage');
+        const faqAdminLink = document.getElementById('faqAdminLink');
 
         // Admin state
         let isAdminLoggedIn = false;
@@ -1861,23 +1739,48 @@
             movieList.forEach(movie => {
                 const movieCard = document.createElement('div');
                 movieCard.className = 'movie-card';
-                movieCard.dataset.redirect = movie.redirectUrl;
                 movieCard.dataset.id = movie._id;
                 
                 const genresHtml = movie.genres.map(genre => 
                     `<span class="genre-tag">${genre}</span>`
                 ).join('');
                 
+                // Updated movie card structure
                 movieCard.innerHTML = `
-                    <div class="admin-controls">
-                        <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
-                        <button class="admin-btn delete-btn" title="Delete Movie" data-id="${movie._id}">×</button>
-                    </div>
-                    ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
-                    ${movie.pinned ? '<div class="pinned-label"><i class="fas fa-thumbtack pin-icon"></i>PINNED</div>' : ''}
                     <div class="movie-poster">
                         <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
                     </div>
+                    <div class="kebab-menu" title="Streaming Options">
+                        <i class="fas fa-ellipsis-vertical"></i>
+                        <div class="streaming-options">
+                            <a href="#" class="streaming-option">
+                                <i class="fab fa-netflix netflix"></i>
+                                <span>Netflix</span>
+                            </a>
+                            <a href="#" class="streaming-option">
+                                <i class="fas fa-play-circle hotstar"></i>
+                                <span>Hotstar</span>
+                            </a>
+                            <a href="#" class="streaming-option">
+                                <i class="fab fa-amazon prime"></i>
+                                <span>Prime Video</span>
+                            </a>
+                            <a href="#" class="streaming-option">
+                                <i class="fas fa-play hulu"></i>
+                                <span>Hulu</span>
+                            </a>
+                            <a href="#" class="streaming-option">
+                                <i class="fas fa-film hbomax"></i>
+                                <span>HBO Max</span>
+                            </a>
+                            <a href="#" class="streaming-option">
+                                <i class="fas fa-play-circle peacock"></i>
+                                <span>Peacock</span>
+                            </a>
+                        </div>
+                    </div>
+                    ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
+                    ${movie.pinned ? '<div class="pinned-label"><i class="fas fa-thumbtack pin-icon"></i>PINNED</div>' : ''}
                     <div class="movie-info">
                         <div class="movie-title">${movie.title}</div>
                         <div class="movie-year">${movie.year}</div>
@@ -1886,9 +1789,46 @@
                             <i class="fas fa-star"></i> ${movie.rating}/10
                         </div>
                     </div>
+                    <div class="admin-controls">
+                        <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
+                        <button class="admin-btn delete-btn" title="Delete Movie" data-id="${movie._id}">×</button>
+                    </div>
                 `;
 
-                // Add event listeners
+                // Add event listeners for kebab menu
+                const kebabMenu = movieCard.querySelector('.kebab-menu');
+                const streamingOptions = movieCard.querySelector('.streaming-options');
+
+                kebabMenu.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Close all other open menus
+                    document.querySelectorAll('.streaming-options.show').forEach(menu => {
+                        if (menu !== streamingOptions) {
+                            menu.classList.remove('show');
+                        }
+                    });
+                    streamingOptions.classList.toggle('show');
+                });
+
+                // Add click handlers for streaming options
+                movieCard.querySelectorAll('.streaming-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const platform = option.querySelector('span').textContent;
+                        const streamingUrls = {
+                            'Netflix': 'https://www.netflix.com/search?q=' + encodeURIComponent(movie.title),
+                            'Hotstar': 'https://www.hotstar.com/in/search?q=' + encodeURIComponent(movie.title),
+                            'Prime Video': 'https://www.amazon.com/s?k=' + encodeURIComponent(movie.title) + '&i=instant-video',
+                            'Hulu': 'https://www.hulu.com/search?q=' + encodeURIComponent(movie.title),
+                            'HBO Max': 'https://www.max.com/search?q=' + encodeURIComponent(movie.title),
+                            'Peacock': 'https://www.peacocktv.com/search?q=' + encodeURIComponent(movie.title)
+                        };
+                        window.open(streamingUrls[platform], '_blank');
+                    });
+                });
+
+                // Add event listeners for admin controls
                 const editBtn = movieCard.querySelector('.edit-btn');
                 const deleteBtn = movieCard.querySelector('.delete-btn');
 
@@ -1914,7 +1854,7 @@
                 });
 
                 movieCard.addEventListener('click', (e) => {
-                    if (!e.target.closest('.admin-controls')) {
+                    if (!e.target.closest('.admin-controls') && !e.target.closest('.kebab-menu')) {
                         const params = new URLSearchParams({
                             title: movie.title,
                             year: movie.year,
@@ -2080,8 +2020,9 @@
             }
         });
 
-        // Admin Panel Functionality
-        adminBtn.addEventListener('click', () => {
+        // Admin Panel Functionality via FAQ link
+        faqAdminLink.addEventListener('click', (e) => {
+            e.preventDefault();
             if (!isAdminLoggedIn) {
                 adminLoginModal.style.display = 'flex';
             } else {
@@ -2304,8 +2245,6 @@
         function openEditModal(movie) {
             document.getElementById('editMovieId').value = movie._id;
             document.getElementById('editMovieTitle').value = movie.title;
-            document.getElementById('editMovieYear').value = movie.year;
-            document.getElementById('editMovieRating').value = movie.rating;
             document.getElementById('editPosterUrl').value = movie.poster;
             document.getElementById('editWatchUrl').value = movie.watchUrl;
             document.getElementById('editDownloadUrl').value = movie.downloadUrl;
@@ -2483,6 +2422,41 @@
 
         // Initial load
         fetchMovies(1);
+
+        // Add this code after the movieCard event listeners:
+        const kebabMenu = movieCard.querySelector('.kebab-menu');
+        const streamingOptions = movieCard.querySelector('.streaming-options');
+
+        kebabMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close all other open menus
+            document.querySelectorAll('.streaming-options.show').forEach(menu => {
+                if (menu !== streamingOptions) {
+                    menu.classList.remove('show');
+                }
+            });
+            streamingOptions.classList.toggle('show');
+        });
+
+        // Close streaming options when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.kebab-menu')) {
+                document.querySelectorAll('.streaming-options.show').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+        });
+
+        // Add click handlers for streaming options
+        movieCard.querySelectorAll('.streaming-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const platform = option.querySelector('span').textContent;
+                // Here you can add logic to handle different streaming platforms
+                alert(`Opening ${movie.title} on ${platform}`);
+            });
+        });
     </script>
 </body>
 </html>

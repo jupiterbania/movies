@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaBuzz - Movies</title>
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -35,7 +30,7 @@
             line-height: 1.6;
             padding-top: 20px;
             min-height: 100vh;
-            padding-bottom: 70px; /* Added padding for admin button */
+            padding-bottom: 100px; /* Added padding for admin buttons */
         }
 
         /* Header Styles */
@@ -314,248 +309,6 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 10px;
-        }
-
-        /* Admin Button Styles */
-        .admin-container {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 100;
-        }
-
-        .admin-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 25px;
-            background: linear-gradient(135deg, #1a2a3a 0%, #2563eb 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .admin-btn i {
-            font-size: 1.3rem;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 10px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .admin-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        }
-
-        .admin-btn:hover i {
-            background: rgba(255, 255, 255, 0.25);
-            transform: rotate(180deg);
-            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Admin Header Logo */
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .admin-header h2 {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text);
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        .admin-header h2 i {
-            background: linear-gradient(135deg, #1a2a3a 0%, #2563eb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.2rem;
-            padding: 12px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
-        }
-
-        /* Admin Login Header */
-        .admin-login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .admin-login-header h2 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            color: var(--text);
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        .admin-login-header i {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2rem;
-            padding: 8px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Admin Panel Button */
-        .admin-panel-btn {
-            background: linear-gradient(135deg, #1a2a3a 0%, #2563eb 100%);
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .admin-panel-btn:hover {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
-        }
-
-        .admin-panel-btn i {
-            font-size: 1.3rem;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 10px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .admin-panel-btn:hover i {
-            background: rgba(255, 255, 255, 0.25);
-            transform: rotate(180deg);
-            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Filter Section */
-        .filter-section {
-            background: var(--secondary);
-            padding: 15px 5%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .filter-btn {
-            background: var(--secondary);
-            color: var(--text);
-            border: 1px solid #2d2f36;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            min-width: fit-content;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--accent);
-            color: var(--primary);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Genre Selection Styles */
-        .genre-selection {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .genre-checkbox {
-            display: none;
-        }
-
-        .genre-label {
-            background: var(--secondary);
-            color: var(--text);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #2d2f36;
-            font-size: 0.9rem;
-        }
-
-        .genre-checkbox:checked + .genre-label {
-            background: var(--accent);
-            color: var(--primary);
-            border-color: var(--accent);
-        }
-
-        .genre-label:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Multiple Genre Display */
-        .movie-genres {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
-        }
-
-        .genre-tag {
-            background: var(--accent);
-            color: var(--primary);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-        }
-
-        /* Filter Section Update */
-        .filter-section {
-            background: var(--secondary);
-            padding: 15px 5%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn.selected {
-            background: var(--accent);
-            color: var(--primary);
-            border-color: var(--accent);
         }
 
         /* Admin Panel Styles */
@@ -915,11 +668,6 @@
             .movie-poster {
                 height: 220px;
             }
-
-            .admin-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
         }
 
         @media (max-width: 480px) {
@@ -928,18 +676,8 @@
                 gap: 6px;
             }
 
-            .filter-btn {
-                padding: 5px 12px;
-                font-size: 0.8rem;
-            }
-
             .movies-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .admin-btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
             }
         }
 
@@ -990,86 +728,53 @@
             transform: scale(1.1);
         }
 
-        /* Toggle Admin Mode Button */
-        .toggle-admin {
+        /* Admin action buttons container */
+        .admin-actions-container {
             position: fixed;
             bottom: 20px;
-            left: 290px;
-            background: var(--accent);
-            color: white;
-            border: none;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .admin-action-btn {
             padding: 10px 20px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            z-index: 100;
-            display: none;
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .toggle-admin {
+            background: var(--accent);
         }
 
         .toggle-admin.active {
             background: #dc3545;
         }
 
-        /* Logout Button */
         .logout-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 160px;
             background: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            z-index: 100;
-            display: none;
         }
 
-        .toggle-admin:hover,
-        .logout-btn:hover {
+        .add-movie-btn {
+            background: #007bff;
+        }
+
+        .admin-action-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-        /* Edit Movie Modal */
-        .edit-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .edit-container {
-            background: var(--admin-bg);
-            padding: 30px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid #2d2f36;
-        }
-
-        .edit-container h2 {
-            color: var(--text);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        /* Add these styles to your existing CSS */
         .pinned-label {
             position: absolute;
             top: 10px;
@@ -1271,12 +976,35 @@
         .genre-selection::-webkit-scrollbar-thumb:hover {
             background: var(--accent-hover);
         }
+        
+        /* Admin action buttons container */
+        .admin-actions-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-actions-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
-        <div class="logo" id="logoContainer">
+        <div class="logo">
             <i class="fas fa-film"></i>
             <h1>CinemaBuzz</h1>
         </div>
@@ -1476,53 +1204,16 @@
         </div>
     </div>
 
-    <!-- Movie Form Modal -->
-    <div id="movieFormModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="formTitle">Add New Movie</h2>
-            <form id="addMovieForm">
-                <div class="form-group">
-                    <label for="movieTitle">Title</label>
-                    <input type="text" id="movieTitle" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="posterUrl">Poster URL</label>
-                    <input type="url" id="posterUrl" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="watchUrl">Watch URL</label>
-                    <input type="url" id="watchUrl" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="downloadUrl">Download URL</label>
-                    <input type="url" id="downloadUrl" required>
-                </div>
-
-                <div class="form-group checkbox-group">
-                    <div>
-                        <input type="checkbox" id="movieFeatured">
-                        <label for="movieFeatured">Featured</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="moviePinned">
-                        <label for="moviePinned">Pinned</label>
-                    </div>
-                </div>
-
-                <button type="submit" id="submitBtn">Add Movie</button>
-            </form>
-        </div>
+    <!-- Container for admin buttons -->
+    <div class="admin-actions-container" id="adminActionsContainer">
+        <!-- Admin buttons will be added here by JavaScript -->
     </div>
 
     <script>
-        // API endpoints - Change this URL when deployed
+        // API endpoints
         const API_URL = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000/api'
-            : '/api'; // This will automatically use the deployed URL
+            : '/api';
 
         // DOM Elements
         const moviesGrid = document.getElementById('moviesGrid');
@@ -1539,6 +1230,7 @@
         const adminLoginModal = document.getElementById('adminLoginModal');
         const adminLoginForm = document.getElementById('adminLoginForm');
         const adminLoginMessage = document.getElementById('adminLoginMessage');
+        const adminActionsContainer = document.getElementById('adminActionsContainer');
 
         // Admin state
         let isAdminLoggedIn = false;
@@ -1547,11 +1239,32 @@
             password: '77861822'
         };
 
-        // Add pagination state
+        // Pagination state
         let currentPage = 1;
         let totalPages = 1;
         let currentSearchTerm = '';
         let currentGenre = 'All';
+
+        // Create admin buttons
+        const toggleAdminBtn = document.createElement('button');
+        toggleAdminBtn.className = 'admin-action-btn toggle-admin';
+        toggleAdminBtn.innerHTML = '<i class="fas fa-user-cog"></i> Admin Mode';
+        toggleAdminBtn.style.display = 'none';
+
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'admin-action-btn logout-btn';
+        logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+        logoutBtn.style.display = 'none';
+
+        const addNewMovieBtn = document.createElement('button');
+        addNewMovieBtn.className = 'admin-action-btn add-movie-btn';
+        addNewMovieBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Add New Movie';
+        addNewMovieBtn.style.display = 'none';
+
+        // Append buttons to container
+        adminActionsContainer.appendChild(toggleAdminBtn);
+        adminActionsContainer.appendChild(addNewMovieBtn);
+        adminActionsContainer.appendChild(logoutBtn);
 
         // Fetch all movies with pagination
         async function fetchMovies(page = 1) {
@@ -1611,30 +1324,6 @@
                 showError('Failed to filter movies. Please try again.');
             } finally {
                 hideSpinner();
-            }
-        }
-
-        // Add new movie
-        async function addMovie(movieData) {
-            try {
-                const response = await fetch(`${API_URL}/movies`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(movieData),
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to add movie');
-                }
-                
-                const result = await response.json();
-                return result;
-            } catch (error) {
-                console.error('Error adding movie:', error);
-                throw error;
             }
         }
 
@@ -1829,8 +1518,6 @@
                 return;
             }
 
-            // Genre validation removed
-            
             const movieData = {
                 title: document.getElementById('movieTitle').value.trim(),
                 poster: document.getElementById('posterUrl').value.trim(),
@@ -1945,14 +1632,6 @@
 
         function resetForm() {
             addMovieForm.reset();
-            currentMovieId = null;
-            document.getElementById('submitBtn').textContent = 'Add Movie';
-            document.getElementById('formTitle').textContent = 'Add New Movie';
-            
-            // Uncheck all genre checkboxes
-            document.querySelectorAll('.genre-checkbox').forEach(checkbox => {
-                checkbox.checked = false;
-            });
         }
 
         function showSpinner() {
@@ -2030,14 +1709,32 @@
             }
         }
 
+        // Add new movie
+        async function addMovie(movieData) {
+            try {
+                const response = await fetch(`${API_URL}/movies`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(movieData),
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to add movie');
+                }
+                
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                console.error('Error adding movie:', error);
+                throw error;
+            }
+        }
+
         // Add toggle admin mode functionality
         let isAdminMode = false;
-        const toggleAdminBtn = document.createElement('button');
-        toggleAdminBtn.className = 'toggle-admin';
-        toggleAdminBtn.textContent = 'Admin Mode';
-        toggleAdminBtn.style.display = 'none'; // Hide by default
-        document.body.appendChild(toggleAdminBtn);
-
         toggleAdminBtn.addEventListener('click', () => {
             if (!isAdminLoggedIn) {
                 showMessage("Please login as admin first!", "error");
@@ -2085,20 +1782,6 @@
             document.getElementById('editFeatured').checked = movie.featured;
             document.getElementById('editPinned').checked = movie.pinned;
             
-            // Clear all genre checkboxes first
-            document.querySelectorAll('#editMovieForm .genre-checkbox').forEach(checkbox => {
-                checkbox.checked = false;
-            });
-
-            // Check the genres that the movie has
-            const genres = Array.isArray(movie.genres) ? movie.genres : [movie.genre].filter(Boolean);
-            genres.forEach(genre => {
-                const checkbox = document.getElementById(`editMovieGenre${genre.replace(/[^a-zA-Z0-9]/g, '')}`);
-                if (checkbox) {
-                    checkbox.checked = true;
-                }
-            });
-            
             editModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -2110,8 +1793,6 @@
                 showEditMessage("Please login as admin first!", "error");
                 return;
             }
-
-            // Genre validation removed
 
             const movieId = document.getElementById('editMovieId').value;
             const movieData = {
@@ -2162,12 +1843,6 @@
             }
         }
 
-        // Create and add logout button
-        const logoutBtn = document.createElement('button');
-        logoutBtn.className = 'logout-btn';
-        logoutBtn.textContent = 'Logout';
-        document.body.appendChild(logoutBtn);
-
         // Add logout handler
         logoutBtn.addEventListener('click', () => {
             if (confirm('Are you sure you want to logout?')) {
@@ -2177,65 +1852,6 @@
                 toggleAdminBtn.classList.remove('active');
                 showMessage("Logged out successfully!", "success");
                 updateAdminUI();
-            }
-        });
-
-        // Create and add Add New Movie button
-        const addNewMovieBtn = document.createElement('button');
-        addNewMovieBtn.className = 'add-movie-btn header-btn';
-        addNewMovieBtn.innerHTML = '<i class="fas fa-plus"></i> Add New Movie';
-        addNewMovieBtn.style.display = 'none'; // Ensure hidden by default
-        addNewMovieBtn.style.marginLeft = '24px';
-        addNewMovieBtn.style.fontWeight = 'bold';
-        addNewMovieBtn.style.fontSize = '1rem';
-        addNewMovieBtn.style.background = 'linear-gradient(90deg, #00c030 60%, #2d88ff 100%)';
-        addNewMovieBtn.style.color = 'white';
-        addNewMovieBtn.style.border = 'none';
-        addNewMovieBtn.style.borderRadius = '24px';
-        addNewMovieBtn.style.padding = '10px 22px';
-        addNewMovieBtn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)';
-        addNewMovieBtn.style.cursor = 'pointer';
-        addNewMovieBtn.style.transition = 'all 0.2s';
-        addNewMovieBtn.onmouseover = function() {
-            addNewMovieBtn.style.background = 'linear-gradient(90deg, #2d88ff 60%, #00c030 100%)';
-            addNewMovieBtn.style.transform = 'translateY(-2px) scale(1.04)';
-        };
-        addNewMovieBtn.onmouseout = function() {
-            addNewMovieBtn.style.background = 'linear-gradient(90deg, #00c030 60%, #2d88ff 100%)';
-            addNewMovieBtn.style.transform = 'none';
-        };
-        const logoContainer = document.getElementById('logoContainer');
-        if (logoContainer && !logoContainer.contains(addNewMovieBtn)) {
-            logoContainer.appendChild(addNewMovieBtn);
-        }
-
-        // Show/hide Add New Movie button after admin login/logout
-        function updateAdminUI() {
-            if (isAdminLoggedIn) {
-                toggleAdminBtn.style.display = 'block';
-                logoutBtn.style.display = 'block';
-                addNewMovieBtn.style.display = 'block';
-            } else {
-                toggleAdminBtn.style.display = 'none';
-                logoutBtn.style.display = 'none';
-                addNewMovieBtn.style.display = 'none';
-            }
-        }
-
-        // Update admin UI on login/logout
-        adminLoginForm.addEventListener('submit', (e) => {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-
-            if (username === adminCredentials.username && password === adminCredentials.password) {
-                isAdminLoggedIn = true;
-                showLoginMessage('Login successful!', 'success');
-                adminLoginModal.style.display = 'none';
-                updateAdminUI();
-                // Reset form
-                adminLoginForm.reset();
-            } else {
-                showLoginMessage('Invalid username or password!', 'error');
             }
         });
 
@@ -2253,185 +1869,21 @@
             resetForm();
         });
 
-        // Update filter functionality to handle multiple genres
-        const filterSection = document.getElementById('filterSection');
-        let selectedGenres = new Set(['All']);
-
-        filterSection.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('filter-btn')) return;
-            
-            const genre = e.target.textContent;
-            
-            if (genre === 'All') {
-                selectedGenres.clear();
-                selectedGenres.add('All');
-                filterButtons.forEach(btn => btn.classList.remove('selected'));
-                e.target.classList.add('active');
-            } else {
-                e.target.classList.toggle('selected');
-                if (e.target.classList.contains('selected')) {
-                    selectedGenres.delete('All');
-                    filterButtons[0].classList.remove('active');
-                    selectedGenres.add(genre);
-                } else {
-                    selectedGenres.delete(genre);
-                    if (selectedGenres.size === 0) {
-                        selectedGenres.add('All');
-                        filterButtons[0].classList.add('active');
-                    }
-                }
-            }
-            
-            filterMoviesByGenres(Array.from(selectedGenres));
-        });
-
-        // Function to filter movies by multiple genres
-        async function filterMoviesByGenres(genres) {
-            if (genres.includes('All')) {
-                await fetchMovies(1);
-                return;
-            }
-
-            try {
-                showSpinner();
-                const response = await fetch(`${API_URL}/movies/genre/${encodeURIComponent(genres.join(','))}?page=1&limit=24`);
-                if (!response.ok) throw new Error('Failed to filter movies');
-                const data = await response.json();
-                renderMovies(data.movies);
-                renderPagination(data.currentPage, data.totalPages);
-                currentPage = data.currentPage;
-                totalPages = data.totalPages;
-            } catch (error) {
-                console.error('Error filtering movies:', error);
-                showError('Failed to filter movies. Please try again.');
-            } finally {
-                hideSpinner();
-            }
-        }
-
-        // Initial load
-        fetchMovies(1);
-
-        // Create a container for admin action buttons if not already created
-        let adminActionsContainer = document.getElementById('adminActionsContainer');
-        if (!adminActionsContainer) {
-            adminActionsContainer = document.createElement('div');
-            adminActionsContainer.id = 'adminActionsContainer';
-            adminActionsContainer.style.position = 'fixed';
-            adminActionsContainer.style.bottom = '20px';
-            adminActionsContainer.style.right = '20px';
-            adminActionsContainer.style.left = 'auto';
-            adminActionsContainer.style.display = 'flex';
-            adminActionsContainer.style.gap = '12px';
-            adminActionsContainer.style.zIndex = '100';
-            document.body.appendChild(adminActionsContainer);
-        }
-
-        // Remove any individual positioning from the buttons
-        toggleAdminBtn.style.position = '';
-        toggleAdminBtn.style.left = '';
-        toggleAdminBtn.style.right = '';
-        toggleAdminBtn.style.bottom = '';
-        addNewMovieBtn.style.position = '';
-        addNewMovieBtn.style.left = '';
-        addNewMovieBtn.style.right = '';
-        addNewMovieBtn.style.bottom = '';
-        logoutBtn.style.position = '';
-        logoutBtn.style.left = '';
-        logoutBtn.style.right = '';
-        logoutBtn.style.bottom = '';
-
-        // Move the buttons into the container (if not already present)
-        if (!adminActionsContainer.contains(toggleAdminBtn)) adminActionsContainer.appendChild(toggleAdminBtn);
-        if (!adminActionsContainer.contains(logoutBtn)) adminActionsContainer.appendChild(logoutBtn);
-
-        // --- Admin UI Upgrade ---
-        // 1. Toast notification
-        let adminToast = document.getElementById('adminToast');
-        if (!adminToast) {
-            adminToast = document.createElement('div');
-            adminToast.id = 'adminToast';
-            adminToast.style.position = 'fixed';
-            adminToast.style.top = '30px';
-            adminToast.style.right = '30px';
-            adminToast.style.background = 'linear-gradient(90deg, #2563eb 60%, #00c030 100%)';
-            adminToast.style.color = 'white';
-            adminToast.style.padding = '14px 32px';
-            adminToast.style.borderRadius = '8px';
-            adminToast.style.fontWeight = 'bold';
-            adminToast.style.fontSize = '1.1rem';
-            adminToast.style.boxShadow = '0 4px 16px rgba(0,0,0,0.18)';
-            adminToast.style.zIndex = '2000';
-            adminToast.style.display = 'none';
-            adminToast.style.transition = 'opacity 0.5s';
-            document.body.appendChild(adminToast);
-        }
-        function showAdminToast(msg) {
-            adminToast.textContent = msg;
-            adminToast.style.display = 'block';
-            adminToast.style.opacity = '1';
-            setTimeout(() => {
-                adminToast.style.opacity = '0';
-                setTimeout(() => { adminToast.style.display = 'none'; }, 500);
-            }, 2000);
-        }
-
-        // 2. Style adminActionsContainer
-        adminActionsContainer.style.background = 'rgba(30, 48, 80, 0.95)';
-        adminActionsContainer.style.border = '1.5px solid #2563eb';
-        adminActionsContainer.style.borderRadius = '18px';
-        adminActionsContainer.style.padding = '10px 18px';
-        adminActionsContainer.style.boxShadow = '0 2px 12px rgba(37,99,235,0.10)';
-
-        // 3. Add tooltips
-        toggleAdminBtn.title = 'Toggle Admin Mode';
-        addNewMovieBtn.title = 'Add New Movie';
-        logoutBtn.title = 'Logout';
-
-        // 4. Admin badge in header
-        let adminBadge = document.getElementById('adminBadge');
-        if (!adminBadge) {
-            adminBadge = document.createElement('span');
-            adminBadge.id = 'adminBadge';
-            adminBadge.textContent = 'Admin';
-            adminBadge.style.background = 'linear-gradient(90deg, #2563eb 60%, #00c030 100%)';
-            adminBadge.style.color = 'white';
-            adminBadge.style.fontWeight = 'bold';
-            adminBadge.style.fontSize = '0.95rem';
-            adminBadge.style.padding = '4px 14px';
-            adminBadge.style.borderRadius = '12px';
-            adminBadge.style.marginLeft = '18px';
-            adminBadge.style.display = 'none';
-            adminBadge.style.verticalAlign = 'middle';
-            const headerLogo = document.querySelector('header .logo');
-            if (headerLogo) headerLogo.appendChild(adminBadge);
-        }
-
-        // Update admin UI function
+        // Update admin UI on login/logout
         function updateAdminUI() {
             if (isAdminLoggedIn) {
                 toggleAdminBtn.style.display = 'block';
                 logoutBtn.style.display = 'block';
                 addNewMovieBtn.style.display = 'block';
-                adminActionsContainer.style.display = 'flex';
-                adminBadge.style.display = 'inline-block';
             } else {
                 toggleAdminBtn.style.display = 'none';
                 logoutBtn.style.display = 'none';
                 addNewMovieBtn.style.display = 'none';
-                adminActionsContainer.style.display = 'none';
-                adminBadge.style.display = 'none';
             }
         }
 
-        // Show toast on login
-        adminLoginForm.addEventListener('submit', (e) => {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            if (username === adminCredentials.username && password === adminCredentials.password) {
-                showAdminToast('Welcome, Admin!');
-            }
-        });
+        // Initial load
+        fetchMovies(1);
     </script>
 </body>
 </html>

@@ -2268,10 +2268,6 @@
             const movieId = document.getElementById('editMovieId').value;
             const movieData = {
                 title: document.getElementById('editMovieTitle').value.trim(),
-                year: parseInt(document.getElementById('editMovieYear').value),
-                rating: parseFloat(document.getElementById('editMovieRating').value),
-                genres: Array.from(document.querySelectorAll('#editMovieForm .genre-checkbox:checked'))
-                    .map(checkbox => checkbox.value),
                 poster: document.getElementById('editPosterUrl').value.trim(),
                 watchUrl: document.getElementById('editWatchUrl').value.trim(),
                 downloadUrl: document.getElementById('editDownloadUrl').value.trim(),

@@ -1276,7 +1276,7 @@
 <body>
     <!-- Header Section -->
     <header>
-        <div class="logo">
+        <div class="logo" id="logoContainer">
             <i class="fas fa-film"></i>
             <h1>CinemaBuzz</h1>
         </div>
@@ -2182,23 +2182,32 @@
 
         // Create and add Add New Movie button
         const addNewMovieBtn = document.createElement('button');
-        addNewMovieBtn.className = 'add-movie-btn';
-        addNewMovieBtn.textContent = 'Add New Movie';
-        addNewMovieBtn.style.position = 'fixed';
-        addNewMovieBtn.style.bottom = '20px';
-        addNewMovieBtn.style.left = '360px';
-        addNewMovieBtn.style.background = '#2563eb';
+        addNewMovieBtn.className = 'add-movie-btn header-btn';
+        addNewMovieBtn.innerHTML = '<i class="fas fa-plus"></i> Add New Movie';
+        addNewMovieBtn.style.display = 'none'; // Ensure hidden by default
+        addNewMovieBtn.style.marginLeft = '24px';
+        addNewMovieBtn.style.fontWeight = 'bold';
+        addNewMovieBtn.style.fontSize = '1rem';
+        addNewMovieBtn.style.background = 'linear-gradient(90deg, #00c030 60%, #2d88ff 100%)';
         addNewMovieBtn.style.color = 'white';
         addNewMovieBtn.style.border = 'none';
-        addNewMovieBtn.style.padding = '10px 20px';
-        addNewMovieBtn.style.borderRadius = '30px';
+        addNewMovieBtn.style.borderRadius = '24px';
+        addNewMovieBtn.style.padding = '10px 22px';
+        addNewMovieBtn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)';
         addNewMovieBtn.style.cursor = 'pointer';
-        addNewMovieBtn.style.fontWeight = 'bold';
-        addNewMovieBtn.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-        addNewMovieBtn.style.transition = 'all 0.3s ease';
-        addNewMovieBtn.style.zIndex = '100';
-        addNewMovieBtn.style.display = 'none';
-        document.body.appendChild(addNewMovieBtn);
+        addNewMovieBtn.style.transition = 'all 0.2s';
+        addNewMovieBtn.onmouseover = function() {
+            addNewMovieBtn.style.background = 'linear-gradient(90deg, #2d88ff 60%, #00c030 100%)';
+            addNewMovieBtn.style.transform = 'translateY(-2px) scale(1.04)';
+        };
+        addNewMovieBtn.onmouseout = function() {
+            addNewMovieBtn.style.background = 'linear-gradient(90deg, #00c030 60%, #2d88ff 100%)';
+            addNewMovieBtn.style.transform = 'none';
+        };
+        const logoContainer = document.getElementById('logoContainer');
+        if (logoContainer && !logoContainer.contains(addNewMovieBtn)) {
+            logoContainer.appendChild(addNewMovieBtn);
+        }
 
         // Show/hide Add New Movie button after admin login/logout
         function updateAdminUI() {
@@ -2302,6 +2311,127 @@
 
         // Initial load
         fetchMovies(1);
+
+        // Create a container for admin action buttons if not already created
+        let adminActionsContainer = document.getElementById('adminActionsContainer');
+        if (!adminActionsContainer) {
+            adminActionsContainer = document.createElement('div');
+            adminActionsContainer.id = 'adminActionsContainer';
+            adminActionsContainer.style.position = 'fixed';
+            adminActionsContainer.style.bottom = '20px';
+            adminActionsContainer.style.right = '20px';
+            adminActionsContainer.style.left = 'auto';
+            adminActionsContainer.style.display = 'flex';
+            adminActionsContainer.style.gap = '12px';
+            adminActionsContainer.style.zIndex = '100';
+            document.body.appendChild(adminActionsContainer);
+        }
+
+        // Remove any individual positioning from the buttons
+        toggleAdminBtn.style.position = '';
+        toggleAdminBtn.style.left = '';
+        toggleAdminBtn.style.right = '';
+        toggleAdminBtn.style.bottom = '';
+        addNewMovieBtn.style.position = '';
+        addNewMovieBtn.style.left = '';
+        addNewMovieBtn.style.right = '';
+        addNewMovieBtn.style.bottom = '';
+        logoutBtn.style.position = '';
+        logoutBtn.style.left = '';
+        logoutBtn.style.right = '';
+        logoutBtn.style.bottom = '';
+
+        // Move the buttons into the container (if not already present)
+        if (!adminActionsContainer.contains(toggleAdminBtn)) adminActionsContainer.appendChild(toggleAdminBtn);
+        if (!adminActionsContainer.contains(logoutBtn)) adminActionsContainer.appendChild(logoutBtn);
+
+        // --- Admin UI Upgrade ---
+        // 1. Toast notification
+        let adminToast = document.getElementById('adminToast');
+        if (!adminToast) {
+            adminToast = document.createElement('div');
+            adminToast.id = 'adminToast';
+            adminToast.style.position = 'fixed';
+            adminToast.style.top = '30px';
+            adminToast.style.right = '30px';
+            adminToast.style.background = 'linear-gradient(90deg, #2563eb 60%, #00c030 100%)';
+            adminToast.style.color = 'white';
+            adminToast.style.padding = '14px 32px';
+            adminToast.style.borderRadius = '8px';
+            adminToast.style.fontWeight = 'bold';
+            adminToast.style.fontSize = '1.1rem';
+            adminToast.style.boxShadow = '0 4px 16px rgba(0,0,0,0.18)';
+            adminToast.style.zIndex = '2000';
+            adminToast.style.display = 'none';
+            adminToast.style.transition = 'opacity 0.5s';
+            document.body.appendChild(adminToast);
+        }
+        function showAdminToast(msg) {
+            adminToast.textContent = msg;
+            adminToast.style.display = 'block';
+            adminToast.style.opacity = '1';
+            setTimeout(() => {
+                adminToast.style.opacity = '0';
+                setTimeout(() => { adminToast.style.display = 'none'; }, 500);
+            }, 2000);
+        }
+
+        // 2. Style adminActionsContainer
+        adminActionsContainer.style.background = 'rgba(30, 48, 80, 0.95)';
+        adminActionsContainer.style.border = '1.5px solid #2563eb';
+        adminActionsContainer.style.borderRadius = '18px';
+        adminActionsContainer.style.padding = '10px 18px';
+        adminActionsContainer.style.boxShadow = '0 2px 12px rgba(37,99,235,0.10)';
+
+        // 3. Add tooltips
+        toggleAdminBtn.title = 'Toggle Admin Mode';
+        addNewMovieBtn.title = 'Add New Movie';
+        logoutBtn.title = 'Logout';
+
+        // 4. Admin badge in header
+        let adminBadge = document.getElementById('adminBadge');
+        if (!adminBadge) {
+            adminBadge = document.createElement('span');
+            adminBadge.id = 'adminBadge';
+            adminBadge.textContent = 'Admin';
+            adminBadge.style.background = 'linear-gradient(90deg, #2563eb 60%, #00c030 100%)';
+            adminBadge.style.color = 'white';
+            adminBadge.style.fontWeight = 'bold';
+            adminBadge.style.fontSize = '0.95rem';
+            adminBadge.style.padding = '4px 14px';
+            adminBadge.style.borderRadius = '12px';
+            adminBadge.style.marginLeft = '18px';
+            adminBadge.style.display = 'none';
+            adminBadge.style.verticalAlign = 'middle';
+            const headerLogo = document.querySelector('header .logo');
+            if (headerLogo) headerLogo.appendChild(adminBadge);
+        }
+
+        // Update admin UI function
+        function updateAdminUI() {
+            if (isAdminLoggedIn) {
+                toggleAdminBtn.style.display = 'block';
+                logoutBtn.style.display = 'block';
+                addNewMovieBtn.style.display = 'block';
+                adminActionsContainer.style.display = 'flex';
+                adminBadge.style.display = 'inline-block';
+            } else {
+                toggleAdminBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                addNewMovieBtn.style.display = 'none';
+                adminActionsContainer.style.display = 'none';
+                adminBadge.style.display = 'none';
+            }
+        }
+
+        // Show toast on login
+        adminLoginForm.addEventListener('submit', (e) => {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                showAdminToast('Welcome, Admin!');
+            }
+        });
     </script>
 </body>
 </html>

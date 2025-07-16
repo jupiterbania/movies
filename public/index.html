@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -36,8 +36,6 @@
             padding-top: 20px;
             min-height: 100vh;
             padding-bottom: 70px; /* Added padding for admin button */
-            max-width: 100%;
-            overflow-x: hidden;
         }
 
         /* Header Styles */
@@ -45,10 +43,8 @@
             background: var(--primary);
             padding: 15px 5%;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             margin-bottom: 15px;
         }
@@ -78,30 +74,6 @@
             position: relative;
             width: 40%;
             max-width: 500px;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 10px 3%;
-            }
-
-            .logo h1 {
-                font-size: 1.4rem;
-            }
-
-            .logo i {
-                font-size: 1.2rem;
-            }
-
-            .search-container {
-                width: 100%;
-                order: 3;
-            }
-
-            .search-container input {
-                padding: 10px 15px 10px 40px;
-                font-size: 0.95rem;
-            }
         }
 
         .search-container input {
@@ -216,10 +188,8 @@
         @media (max-width: 575px) {
             .movies-grid {
                 grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on extra small screens */
-                gap: 8px;
-                padding: 0 10px;
-                width: 100%;
-                box-sizing: border-box;
+                gap: 10px;
+                padding: 0 5px;
             }
         }
 
@@ -228,20 +198,6 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding-top: 10px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .section-header h2 {
-                font-size: 1.5rem;
-            }
-
             .movie-poster {
                 height: 240px;
             }
@@ -253,59 +209,19 @@
             }
         }
 
-        /* Make sure movie card has proper positioning */
         .movie-card {
-            position: relative;
             background: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
+            position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             cursor: pointer;
-            width: 100%;
-        }
-
-        @media (max-width: 767px) {
-            .movie-card {
-                border-radius: 12px;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .movie-poster {
-                width: 100%;
-                height: auto;
-                border-radius: 12px 12px 0 0;
-            }
-
-            .movie-info {
-                width: 100%;
-                padding: 10px;
-            }
-
-            .movie-title {
-                font-size: 1rem;
-                margin-bottom: 5px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .movie-genres {
-                margin-top: 5px;
-            }
-
-            .movie-genre {
-                font-size: 0.7rem;
-                padding: 2px 6px;
-                margin-right: 4px;
-                margin-bottom: 4px;
-            }
         }
 
         .movie-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
         }
 
         .featured-label {
@@ -341,27 +257,7 @@
         }
 
         .movie-info {
-            padding: 12px;
-        }
-
-        @media (max-width: 480px) {
-            .movie-info {
-                padding: 10px;
-            }
-
-            .movie-title {
-                font-size: 0.95rem;
-            }
-
-            .movie-year,
-            .movie-rating {
-                font-size: 0.85rem;
-            }
-
-            .featured-label {
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
+            padding: 15px;
         }
 
         .movie-title {
@@ -399,29 +295,9 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            padding: 0 10px;
-        }
-
-        @media (max-width: 480px) {
-            footer {
-                padding: 20px 3%;
-                margin-top: 30px;
-            }
-
-            .footer-links {
-                gap: 15px;
-            }
-
-            .footer-links a {
-                font-size: 0.9rem;
-            }
-
-            .copyright {
-                font-size: 0.85rem;
-            }
         }
 
         .footer-links a {
@@ -443,27 +319,21 @@
         /* Admin Button Styles */
         .admin-container {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 30px;
+            left: 30px;
             z-index: 100;
-            width: 100%;
-            max-width: 300px;
-            padding: 0 15px;
         }
 
         .admin-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 12px;
-            padding: 12px 20px;
-            width: 100%;
+            padding: 15px 25px;
             background: linear-gradient(135deg, #1a2a3a 0%, #2563eb 100%);
             color: white;
             border: none;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -496,7 +366,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 2px solid var(--accent);
         }
@@ -504,21 +374,10 @@
         .admin-header h2 {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--text);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin: 0;
-        }
-
-        @media (max-width: 480px) {
-            .admin-header h2 {
-                font-size: 1.3rem;
-            }
-
-            .admin-header h2 i {
-                font-size: 1.8rem;
-                padding: 8px;
-            }
         }
 
         .admin-header h2 i {
@@ -601,32 +460,14 @@
         /* Filter Section */
         .filter-section {
             background: var(--secondary);
-            padding: 12px 3%;
+            padding: 15px 5%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
-            justify-content: flex-start;
-            gap: 8px;
-            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
             max-width: 100%;
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-        }
-
-        .filter-section::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
-        }
-
-        @media (max-width: 480px) {
-            .filter-section {
-                padding: 10px 2%;
-            }
-
-            .filter-btn {
-                padding: 6px 12px;
-                font-size: 0.85rem;
-            }
         }
 
         .filter-btn {
@@ -729,20 +570,12 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 15px;
-        }
-
-        @media (max-width: 480px) {
-            .admin-modal {
-                padding: 10px;
-                align-items: flex-start;
-                padding-top: 20px;
-            }
+            padding: 20px;
         }
 
         .admin-content {
             background: var(--admin-bg);
-            padding: 25px;
+            padding: 30px;
             border-radius: 8px;
             width: 90%;
             max-width: 500px;
@@ -750,15 +583,6 @@
             overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid #2d2f36;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (max-width: 480px) {
-            .admin-content {
-                padding: 20px 15px;
-                width: 100%;
-                max-height: 95vh;
-            }
         }
 
         .form-actions {
@@ -837,30 +661,6 @@
             color: var(--text);
             font-size: 1rem;
             transition: all 0.3s ease;
-        }
-
-        @media (max-width: 480px) {
-            .form-group {
-                margin-bottom: 15px;
-            }
-
-            .form-group label {
-                font-size: 0.9rem;
-                margin-bottom: 6px;
-            }
-
-            .form-group input[type="text"],
-            .form-group input[type="number"],
-            .form-group input[type="url"],
-            .form-group select {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-
-            .submit-btn, .cancel-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
         }
 
         .form-group input:focus,
@@ -944,13 +744,12 @@
             align-items: center;
             z-index: 1000;
             backdrop-filter: blur(5px);
-            padding: 15px;
         }
 
         .edit-content {
             background: var(--card-bg);
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             width: 90%;
             max-width: 600px;
             max-height: 90vh;
@@ -958,22 +757,6 @@
             position: relative;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             animation: modalFadeIn 0.3s ease;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (max-width: 480px) {
-            .edit-modal {
-                padding: 10px;
-                align-items: flex-start;
-                padding-top: 20px;
-            }
-
-            .edit-content {
-                padding: 20px 15px;
-                width: 100%;
-                max-height: 95vh;
-                border-radius: 12px;
-            }
         }
 
         .form-actions {
@@ -1031,39 +814,16 @@
             align-items: center;
             z-index: 1000;
             backdrop-filter: blur(5px);
-            padding: 15px;
         }
 
         .admin-login-content {
             background: var(--card-bg);
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             width: 90%;
             max-width: 400px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             animation: modalFadeIn 0.3s ease;
-        }
-
-        @media (max-width: 480px) {
-            .admin-login-modal {
-                padding: 10px;
-                align-items: center;
-            }
-
-            .admin-login-content {
-                padding: 20px 15px;
-                width: 100%;
-                border-radius: 12px;
-            }
-
-            .admin-login-header h2 {
-                font-size: 1.4rem;
-            }
-
-            .admin-login-header i {
-                font-size: 1.6rem;
-                padding: 6px;
-            }
         }
 
         .password-input-group {
@@ -1510,95 +1270,6 @@
 
         .genre-selection::-webkit-scrollbar-thumb:hover {
             background: var(--accent-hover);
-        }
-
-        /* Update the Kebab Menu Styles */
-        .kebab-menu {
-            position: absolute;
-            top: 10px;
-            right: 10px; /* Changed from left to right */
-            z-index: 999; /* Increased z-index */
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 8px;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .kebab-menu i {
-            color: white;
-            font-size: 20px;
-        }
-
-        .kebab-menu:hover {
-            background: rgba(0, 0, 0, 0.95);
-            transform: scale(1.1);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* Update Streaming Options Menu */
-        .streaming-options {
-            position: absolute;
-            top: 45px;
-            right: 0; /* Changed from left to right */
-            background: rgba(16, 16, 16, 0.98);
-            border-radius: 8px;
-            padding: 8px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            min-width: 180px;
-            display: none;
-            z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .streaming-option {
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .streaming-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .streaming-option i {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .streaming-option span {
-            font-size: 0.95rem;
-            white-space: nowrap;
-        }
-
-        /* Platform-specific colors - make them brighter */
-        .netflix { color: #E50914; }
-        .hotstar { color: #1F80E0; }
-        .prime { color: #00A8E1; }
-        .hulu { color: #1CE783; }
-        .hbomax { color: #A660FF; }
-        .peacock { color: #00C4FF; }
-
-        .streaming-option:hover i {
-            transform: scale(1.1);
-        }
-
-        /* Make sure the movie card has proper positioning */
-        .movie-card {
-            position: relative;
-            overflow: visible !important;
         }
     </style>
 </head>
@@ -2190,48 +1861,23 @@
             movieList.forEach(movie => {
                 const movieCard = document.createElement('div');
                 movieCard.className = 'movie-card';
+                movieCard.dataset.redirect = movie.redirectUrl;
                 movieCard.dataset.id = movie._id;
                 
                 const genresHtml = movie.genres.map(genre => 
                     `<span class="genre-tag">${genre}</span>`
                 ).join('');
                 
-                // Updated movie card structure
                 movieCard.innerHTML = `
-                    <div class="movie-poster">
-                        <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
-                    </div>
-                    <div class="kebab-menu" title="Streaming Options">
-                        <i class="fas fa-ellipsis-vertical"></i>
-                        <div class="streaming-options">
-                            <a href="#" class="streaming-option">
-                                <i class="fab fa-netflix netflix"></i>
-                                <span>Netflix</span>
-                            </a>
-                            <a href="#" class="streaming-option">
-                                <i class="fas fa-play-circle hotstar"></i>
-                                <span>Hotstar</span>
-                            </a>
-                            <a href="#" class="streaming-option">
-                                <i class="fab fa-amazon prime"></i>
-                                <span>Prime Video</span>
-                            </a>
-                            <a href="#" class="streaming-option">
-                                <i class="fas fa-play hulu"></i>
-                                <span>Hulu</span>
-                            </a>
-                            <a href="#" class="streaming-option">
-                                <i class="fas fa-film hbomax"></i>
-                                <span>HBO Max</span>
-                            </a>
-                            <a href="#" class="streaming-option">
-                                <i class="fas fa-play-circle peacock"></i>
-                                <span>Peacock</span>
-                            </a>
-                        </div>
+                    <div class="admin-controls">
+                        <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
+                        <button class="admin-btn delete-btn" title="Delete Movie" data-id="${movie._id}">×</button>
                     </div>
                     ${movie.featured ? '<div class="featured-label">FEATURED</div>' : ''}
                     ${movie.pinned ? '<div class="pinned-label"><i class="fas fa-thumbtack pin-icon"></i>PINNED</div>' : ''}
+                    <div class="movie-poster">
+                        <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
+                    </div>
                     <div class="movie-info">
                         <div class="movie-title">${movie.title}</div>
                         <div class="movie-year">${movie.year}</div>
@@ -2240,46 +1886,9 @@
                             <i class="fas fa-star"></i> ${movie.rating}/10
                         </div>
                     </div>
-                    <div class="admin-controls">
-                        <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
-                        <button class="admin-btn delete-btn" title="Delete Movie" data-id="${movie._id}">×</button>
-                    </div>
                 `;
 
-                // Add event listeners for kebab menu
-                const kebabMenu = movieCard.querySelector('.kebab-menu');
-                const streamingOptions = movieCard.querySelector('.streaming-options');
-
-                kebabMenu.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    // Close all other open menus
-                    document.querySelectorAll('.streaming-options.show').forEach(menu => {
-                        if (menu !== streamingOptions) {
-                            menu.classList.remove('show');
-                        }
-                    });
-                    streamingOptions.classList.toggle('show');
-                });
-
-                // Add click handlers for streaming options
-                movieCard.querySelectorAll('.streaming-option').forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const platform = option.querySelector('span').textContent;
-                        const streamingUrls = {
-                            'Netflix': 'https://www.netflix.com/search?q=' + encodeURIComponent(movie.title),
-                            'Hotstar': 'https://www.hotstar.com/in/search?q=' + encodeURIComponent(movie.title),
-                            'Prime Video': 'https://www.amazon.com/s?k=' + encodeURIComponent(movie.title) + '&i=instant-video',
-                            'Hulu': 'https://www.hulu.com/search?q=' + encodeURIComponent(movie.title),
-                            'HBO Max': 'https://www.max.com/search?q=' + encodeURIComponent(movie.title),
-                            'Peacock': 'https://www.peacocktv.com/search?q=' + encodeURIComponent(movie.title)
-                        };
-                        window.open(streamingUrls[platform], '_blank');
-                    });
-                });
-
-                // Add event listeners for admin controls
+                // Add event listeners
                 const editBtn = movieCard.querySelector('.edit-btn');
                 const deleteBtn = movieCard.querySelector('.delete-btn');
 
@@ -2305,7 +1914,7 @@
                 });
 
                 movieCard.addEventListener('click', (e) => {
-                    if (!e.target.closest('.admin-controls') && !e.target.closest('.kebab-menu')) {
+                    if (!e.target.closest('.admin-controls')) {
                         const params = new URLSearchParams({
                             title: movie.title,
                             year: movie.year,
@@ -2874,41 +2483,6 @@
 
         // Initial load
         fetchMovies(1);
-
-        // Add this code after the movieCard event listeners:
-        const kebabMenu = movieCard.querySelector('.kebab-menu');
-        const streamingOptions = movieCard.querySelector('.streaming-options');
-
-        kebabMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-            // Close all other open menus
-            document.querySelectorAll('.streaming-options.show').forEach(menu => {
-                if (menu !== streamingOptions) {
-                    menu.classList.remove('show');
-                }
-            });
-            streamingOptions.classList.toggle('show');
-        });
-
-        // Close streaming options when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.kebab-menu')) {
-                document.querySelectorAll('.streaming-options.show').forEach(menu => {
-                    menu.classList.remove('show');
-                });
-            }
-        });
-
-        // Add click handlers for streaming options
-        movieCard.querySelectorAll('.streaming-option').forEach(option => {
-            option.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const platform = option.querySelector('span').textContent;
-                // Here you can add logic to handle different streaming platforms
-                alert(`Opening ${movie.title} on ${platform}`);
-            });
-        });
     </script>
 </body>
 </html>

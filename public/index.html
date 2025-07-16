@@ -198,11 +198,28 @@
             width: 100%;
             height: auto;
             max-height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #2c3e50, #4a6491);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         @media (max-width: 768px) {
             .movie-poster {
                 max-height: 270px;
+            }
+            .movies-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
         }
 
@@ -213,6 +230,11 @@
             .movies-grid {
                 gap: 6px;
                 padding: 0 2px;
+                grid-template-columns: 1fr;
+            }
+            .movie-card {
+                margin: 0 auto;
+                max-width: 90vw;
             }
         }
 
@@ -243,25 +265,6 @@
             font-size: 0.8rem;
             font-weight: 700;
             z-index: 2;
-        }
-
-        .movie-poster {
-            width: 100%;
-            height: 280px;
-            background: linear-gradient(45deg, #2c3e50, #4a6491);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .movie-poster img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .movie-card:hover .movie-poster img {
-            transform: scale(1.1);
         }
 
         .movie-info {

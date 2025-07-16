@@ -205,17 +205,26 @@
 
         @media (max-width: 767px) and (min-width: 576px) {
             .movies-grid {
-                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on small screens */
-                gap: 15px;
-                padding: 0 10px;
+                grid-template-columns: repeat(1, 1fr); /* Show 1 movie per row on small screens */
+                gap: 20px;
+                padding: 0 15px;
+            }
+
+            .movie-card {
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
 
         @media (max-width: 575px) {
             .movies-grid {
-                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on extra small screens */
-                gap: 10px;
-                padding: 0 5px;
+                grid-template-columns: repeat(1, 1fr); /* Show 1 movie per row on extra small screens */
+                gap: 15px;
+                padding: 0 10px;
+            }
+
+            .movie-card {
+                max-width: 100%;
             }
         }
 
@@ -258,6 +267,41 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             cursor: pointer;
+        }
+
+        @media (max-width: 767px) {
+            .movie-card {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                border-radius: 15px;
+            }
+
+            .movie-poster {
+                width: 40%;
+                min-width: 140px;
+                height: auto;
+                border-radius: 15px 0 0 15px;
+            }
+
+            .movie-info {
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 15px;
+            }
+
+            .movie-title {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+
+            .movie-genres {
+                margin-top: 10px;
+            }
         }
 
         .movie-card:hover {

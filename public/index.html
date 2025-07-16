@@ -36,6 +36,8 @@
             padding-top: 20px;
             min-height: 100vh;
             padding-bottom: 70px; /* Added padding for admin button */
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         /* Header Styles */
@@ -214,8 +216,10 @@
         @media (max-width: 575px) {
             .movies-grid {
                 grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on extra small screens */
-                gap: 10px;
-                padding: 0 5px;
+                gap: 8px;
+                padding: 0 10px;
+                width: 100%;
+                box-sizing: border-box;
             }
         }
 
@@ -254,10 +258,11 @@
             position: relative;
             background: var(--card-bg);
             border-radius: 12px;
-            overflow: visible;
+            overflow: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             cursor: pointer;
+            width: 100%;
         }
 
         @media (max-width: 767px) {
@@ -299,8 +304,8 @@
         }
 
         .movie-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .featured-label {

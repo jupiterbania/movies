@@ -194,18 +194,25 @@
         }
 
         .movie-poster {
-            height: 360px; /* 1:3 aspect ratio for typical card width */
+            aspect-ratio: 1 / 3;
+            width: 100%;
+            height: auto;
+            max-height: 360px;
         }
 
         @media (max-width: 768px) {
             .movie-poster {
-                height: 270px;
+                max-height: 270px;
             }
         }
 
         @media (max-width: 480px) {
             .movie-poster {
-                height: 180px;
+                max-height: 120px;
+            }
+            .movies-grid {
+                gap: 6px;
+                padding: 0 2px;
             }
         }
 

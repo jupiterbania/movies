@@ -1916,10 +1916,7 @@
                 isAdminLoggedIn = true;
                 showLoginMessage('Login successful!', 'success');
                 adminLoginModal.style.display = 'none';
-                
-                // Show admin controls
-                toggleAdminBtn.style.display = 'block';
-                logoutBtn.style.display = 'block';
+                updateAdminUI();
                 
                 // Reset form
                 adminLoginForm.reset();
@@ -2197,11 +2194,67 @@
                 isAdminLoggedIn = false;
                 isAdminMode = false;
                 moviesGrid.classList.remove('admin-mode');
-                toggleAdminBtn.style.display = 'none';
-                logoutBtn.style.display = 'none';
                 toggleAdminBtn.classList.remove('active');
                 showMessage("Logged out successfully!", "success");
+                updateAdminUI();
             }
+        });
+
+        // Create and add Add New Movie button
+        const addNewMovieBtn = document.createElement('button');
+        addNewMovieBtn.className = 'add-movie-btn';
+        addNewMovieBtn.textContent = 'Add New Movie';
+        addNewMovieBtn.style.position = 'fixed';
+        addNewMovieBtn.style.bottom = '20px';
+        addNewMovieBtn.style.left = '360px';
+        addNewMovieBtn.style.background = '#2563eb';
+        addNewMovieBtn.style.color = 'white';
+        addNewMovieBtn.style.border = 'none';
+        addNewMovieBtn.style.padding = '10px 20px';
+        addNewMovieBtn.style.borderRadius = '30px';
+        addNewMovieBtn.style.cursor = 'pointer';
+        addNewMovieBtn.style.fontWeight = 'bold';
+        addNewMovieBtn.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        addNewMovieBtn.style.transition = 'all 0.3s ease';
+        addNewMovieBtn.style.zIndex = '100';
+        addNewMovieBtn.style.display = 'none';
+        document.body.appendChild(addNewMovieBtn);
+
+        // Show/hide Add New Movie button after admin login/logout
+        function updateAdminUI() {
+            if (isAdminLoggedIn) {
+                toggleAdminBtn.style.display = 'block';
+                logoutBtn.style.display = 'block';
+                addNewMovieBtn.style.display = 'block';
+            } else {
+                toggleAdminBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                addNewMovieBtn.style.display = 'none';
+            }
+        }
+
+        // Update admin UI on login/logout
+        adminLoginForm.addEventListener('submit', (e) => {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                isAdminLoggedIn = true;
+                showLoginMessage('Login successful!', 'success');
+                adminLoginModal.style.display = 'none';
+                updateAdminUI();
+                // Reset form
+                adminLoginForm.reset();
+            } else {
+                showLoginMessage('Invalid username or password!', 'error');
+            }
+        });
+
+        // Add New Movie button click handler
+        addNewMovieBtn.addEventListener('click', () => {
+            adminModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            resetForm();
         });
 
         // Add event listener for cancel button

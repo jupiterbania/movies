@@ -1829,20 +1829,10 @@
                 return;
             }
 
-            // Get selected genres
-            const selectedGenres = Array.from(document.querySelectorAll('#addMovieForm .genre-checkbox:checked'))
-                .map(checkbox => checkbox.value);
-
-            if (selectedGenres.length === 0) {
-                showMessage("Please select at least one genre!", "error");
-                return;
-            }
+            // Genre validation removed
             
             const movieData = {
                 title: document.getElementById('movieTitle').value.trim(),
-                year: parseInt(document.getElementById('movieYear').value),
-                rating: parseFloat(document.getElementById('movieRating').value),
-                genres: selectedGenres,
                 poster: document.getElementById('posterUrl').value.trim(),
                 watchUrl: document.getElementById('watchUrl').value.trim(),
                 downloadUrl: document.getElementById('downloadUrl').value.trim(),
@@ -2121,21 +2111,11 @@
                 return;
             }
 
-            // Get selected genres
-            const selectedGenres = Array.from(document.querySelectorAll('#editMovieForm .genre-checkbox:checked'))
-                .map(checkbox => checkbox.value);
-
-            if (selectedGenres.length === 0) {
-                showEditMessage("Please select at least one genre!", "error");
-                return;
-            }
+            // Genre validation removed
 
             const movieId = document.getElementById('editMovieId').value;
             const movieData = {
                 title: document.getElementById('editMovieTitle').value.trim(),
-                year: parseInt(document.getElementById('editMovieYear').value),
-                rating: parseFloat(document.getElementById('editMovieRating').value),
-                genres: selectedGenres,
                 poster: document.getElementById('editPosterUrl').value.trim(),
                 watchUrl: document.getElementById('editWatchUrl').value.trim(),
                 downloadUrl: document.getElementById('editDownloadUrl').value.trim(),

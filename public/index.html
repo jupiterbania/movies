@@ -1765,6 +1765,19 @@
             document.body.appendChild(baitId);
             baits.push(baitId);
 
+            // Image bait (ad domain)
+            const imgBait = document.createElement('img');
+            imgBait.src = 'https://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDL2ZK1bBABGAEyCjII6w'; // Google ad image
+            imgBait.style.width = '1px';
+            imgBait.style.height = '1px';
+            imgBait.style.position = 'absolute';
+            imgBait.style.left = '-9999px';
+            imgBait.onerror = function() {
+                showAdblockMessage();
+            };
+            document.body.appendChild(imgBait);
+            baits.push(imgBait);
+
             return baits;
         }
 

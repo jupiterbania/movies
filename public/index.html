@@ -218,7 +218,7 @@
 
         .movie-poster {
             width: 100%;
-            height: 260px;
+            height: 280px;
             background: linear-gradient(45deg, #2c3e50, #4a6491);
             position: relative;
             overflow: hidden;
@@ -237,20 +237,15 @@
 
         .movie-info {
             padding: 15px;
+            text-align: center;
         }
 
         .movie-title {
             font-weight: 600;
-            margin-bottom: 5px;
             font-size: 1.1rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        .movie-year {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
         }
 
         /* Footer */
@@ -860,102 +855,6 @@
             }
         }
 
-        /* Movie Form Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Add styles for genre selection */
-        .genre-selection {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 10px 0;
-            max-height: 200px;
-            overflow-y: auto;
-            padding: 10px;
-            background: var(--primary);
-            border-radius: 8px;
-        }
-
-        .genre-checkbox {
-            display: none;
-        }
-
-        .genre-label {
-            background: var(--secondary);
-            color: var(--text);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #2d2f36;
-            font-size: 0.9rem;
-            user-select: none;
-        }
-
-        .genre-checkbox:checked + .genre-label {
-            background: var(--accent);
-            color: var(--primary);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .genre-label:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Scrollbar styles for genre selection */
-        .genre-selection::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .genre-selection::-webkit-scrollbar-track {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-
-        .genre-selection::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-
-        .genre-selection::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-hover);
-        }
-        
         /* Admin action buttons container */
         .admin-actions-container {
             position: fixed;
@@ -993,11 +892,6 @@
             <input type="text" id="searchInput" placeholder="Search for movies...">
         </div>
     </header>
-
-    <!-- Filter Section -->
-    <div class="filter-section" id="filterSection">
-        <!-- Genre filter buttons removed as requested -->
-    </div>
 
     <!-- Featured Movies Section -->
     <section class="featured-section">
@@ -1197,7 +1091,6 @@
         // DOM Elements
         const moviesGrid = document.getElementById('moviesGrid');
         const searchInput = document.getElementById('searchInput');
-        const filterButtons = document.querySelectorAll('.filter-btn');
         const adminBtn = document.getElementById('adminBtn');
         const adminModal = document.getElementById('adminModal');
         const closeAdmin = document.getElementById('closeAdmin');
@@ -1222,7 +1115,6 @@
         let currentPage = 1;
         let totalPages = 1;
         let currentSearchTerm = '';
-        let currentGenre = 'All';
 
         // Create admin buttons
         const toggleAdminBtn = document.createElement('button');
@@ -1283,30 +1175,7 @@
             }
         }
 
-        // Filter by genre with pagination
-        async function filterByGenre(genre, page = 1) {
-            try {
-                showSpinner();
-                if (genre === 'All') {
-                    await fetchMovies(page);
-                    return;
-                }
-                const response = await fetch(`${API_URL}/movies/genre/${encodeURIComponent(genre)}?page=${page}&limit=24`);
-                if (!response.ok) throw new Error('Failed to filter movies');
-                const data = await response.json();
-                renderMovies(data.movies);
-                renderPagination(data.currentPage, data.totalPages);
-                currentPage = data.currentPage;
-                totalPages = data.totalPages;
-            } catch (error) {
-                console.error('Error filtering movies:', error);
-                showError('Failed to filter movies. Please try again.');
-            } finally {
-                hideSpinner();
-            }
-        }
-
-        // Render movie cards (without ratings)
+        // Render movie cards (only title and poster)
         function renderMovies(movieList) {
             moviesGrid.innerHTML = '';
             if (!movieList || movieList.length === 0) {
@@ -1320,10 +1189,6 @@
                 movieCard.dataset.redirect = movie.redirectUrl;
                 movieCard.dataset.id = movie._id;
                 
-                const genresHtml = movie.genres.map(genre => 
-                    `<span class="genre-tag">${genre}</span>`
-                ).join('');
-                
                 movieCard.innerHTML = `
                     <div class="admin-controls">
                         <button class="admin-btn edit-btn" title="Edit Movie" data-id="${movie._id}">✎</button>
@@ -1336,8 +1201,6 @@
                     </div>
                     <div class="movie-info">
                         <div class="movie-title">${movie.title}</div>
-                        <div class="movie-year">${movie.year}</div>
-                        <div class="movie-genres">${genresHtml}</div>
                     </div>
                 `;
 
@@ -1370,8 +1233,6 @@
                     if (!e.target.closest('.admin-controls')) {
                         const params = new URLSearchParams({
                             title: movie.title,
-                            year: movie.year,
-                            genre: movie.genre,
                             poster: movie.poster,
                             watchUrl: movie.watchUrl,
                             downloadUrl: movie.downloadUrl
@@ -1451,8 +1312,6 @@
         function handlePageChange(page) {
             if (currentSearchTerm) {
                 searchMovies(currentSearchTerm, page);
-            } else if (currentGenre !== 'All') {
-                filterByGenre(currentGenre, page);
             } else {
                 fetchMovies(page);
             }
@@ -1463,26 +1322,12 @@
         searchInput.addEventListener('input', debounce(() => {
             const searchTerm = searchInput.value.trim();
             currentSearchTerm = searchTerm;
-            currentGenre = 'All';
             if (searchTerm) {
                 searchMovies(searchTerm, 1);
             } else {
                 fetchMovies(1);
             }
         }, 300));
-
-        // Filter by genre
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                const genre = button.textContent;
-                currentGenre = genre;
-                currentSearchTerm = '';
-                searchInput.value = '';
-                filterByGenre(genre, 1);
-            });
-        });
 
         // Handle form submission
         addMovieForm.addEventListener('submit', async (e) => {

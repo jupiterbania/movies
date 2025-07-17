@@ -1707,9 +1707,7 @@
     </script>
     <script>
         function showAdblockMessage() {
-            // Hide all content
             document.body.innerHTML = '';
-            // Show adblock message
             const msg = document.createElement('div');
             msg.style.position = 'fixed';
             msg.style.top = 0;
@@ -1733,29 +1731,72 @@
             document.body.appendChild(msg);
         }
 
-        // Create a bait element that ad blockers usually block
-        const bait = document.createElement('div');
-        bait.className = 'adsbox';
-        bait.style.height = '1px';
-        bait.style.width = '1px';
-        bait.style.position = 'absolute';
-        bait.style.left = '-9999px';
-        document.body.appendChild(bait);
+        // Multiple bait elements
+        function createBaits() {
+            const baits = [];
+
+            // Common ad-related class names
+            const classes = [
+                'adsbox', 'ad-banner', 'ad-container', 'ad', 'ads', 'sponsor', 'sponsored'
+            ];
+
+            classes.forEach(cls => {
+                const bait = document.createElement('div');
+                bait.className = cls;
+                bait.style.height = '1px';
+                bait.style.width = '1px';
+                bait.style.position = 'absolute';
+                bait.style.left = '-9999px';
+                bait.style.pointerEvents = 'none';
+                bait.innerHTML = '&nbsp;';
+                document.body.appendChild(bait);
+                baits.push(bait);
+            });
+
+            // Bait with ad-like id
+            const baitId = document.createElement('div');
+            baitId.id = 'ad-banner';
+            baitId.style.height = '1px';
+            baitId.style.width = '1px';
+            baitId.style.position = 'absolute';
+            baitId.style.left = '-9999px';
+            baitId.style.pointerEvents = 'none';
+            baitId.innerHTML = '&nbsp;';
+            document.body.appendChild(baitId);
+            baits.push(baitId);
+
+            return baits;
+        }
+
+        function isBaitBlocked(bait) {
+            // Check if element is hidden or removed
+            if (!bait) return true;
+            const style = window.getComputedStyle(bait);
+            return (
+                bait.offsetParent === null ||
+                bait.offsetHeight === 0 ||
+                bait.offsetWidth === 0 ||
+                style.display === 'none' ||
+                style.visibility === 'hidden' ||
+                style.opacity === '0'
+            );
+        }
+
+        function checkAdblock() {
+            for (const bait of window._adblockBaits) {
+                if (isBaitBlocked(bait)) {
+                    showAdblockMessage();
+                    return true;
+                }
+            }
+            return false;
+        }
 
         window.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                // If the bait is hidden or removed, ad blocker is active
-                if (
-                    !bait ||
-                    bait.offsetParent === null ||
-                    bait.offsetHeight === 0 ||
-                    bait.offsetWidth === 0
-                ) {
-                    showAdblockMessage();
-                }
-                // Clean up
-                if (bait && bait.parentNode) bait.parentNode.removeChild(bait);
-            }, 500);
+            window._adblockBaits = createBaits();
+            setTimeout(checkAdblock, 500);
+            // Keep checking every 2 seconds in case adblocker is enabled after page load
+            setInterval(checkAdblock, 2000);
         });
     </script>
 </body>

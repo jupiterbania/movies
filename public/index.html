@@ -1705,5 +1705,58 @@
         // Initial load
         fetchMovies(1);
     </script>
+    <script>
+        function showAdblockMessage() {
+            // Hide all content
+            document.body.innerHTML = '';
+            // Show adblock message
+            const msg = document.createElement('div');
+            msg.style.position = 'fixed';
+            msg.style.top = 0;
+            msg.style.left = 0;
+            msg.style.width = '100vw';
+            msg.style.height = '100vh';
+            msg.style.background = '#0f1014';
+            msg.style.color = '#fff';
+            msg.style.display = 'flex';
+            msg.style.flexDirection = 'column';
+            msg.style.justifyContent = 'center';
+            msg.style.alignItems = 'center';
+            msg.style.zIndex = 99999;
+            msg.innerHTML = `
+                <h1 style="font-size:2.2rem;margin-bottom:20px;">Ad Blocker Detected</h1>
+                <p style="font-size:1.2rem;max-width:500px;text-align:center;">
+                    Website open na ho rha hai kyunki aapne ads blocker ya DNS use kiya hai.<br>
+                    Kripya apna ads blocker ya DNS disable karein aur page reload karein.
+                </p>
+            `;
+            document.body.appendChild(msg);
+        }
+
+        // Create a bait element that ad blockers usually block
+        const bait = document.createElement('div');
+        bait.className = 'adsbox';
+        bait.style.height = '1px';
+        bait.style.width = '1px';
+        bait.style.position = 'absolute';
+        bait.style.left = '-9999px';
+        document.body.appendChild(bait);
+
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // If the bait is hidden or removed, ad blocker is active
+                if (
+                    !bait ||
+                    bait.offsetParent === null ||
+                    bait.offsetHeight === 0 ||
+                    bait.offsetWidth === 0
+                ) {
+                    showAdblockMessage();
+                }
+                // Clean up
+                if (bait && bait.parentNode) bait.parentNode.removeChild(bait);
+            }, 500);
+        });
+    </script>
 </body>
 </html>

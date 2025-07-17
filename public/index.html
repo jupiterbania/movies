@@ -30,7 +30,7 @@
             line-height: 1.6;
             padding-top: 20px;
             min-height: 100vh;
-            padding-bottom: 100px; /* Added padding for admin buttons */
+            padding-bottom: 100px;
         }
 
         /* Header Styles */
@@ -150,31 +150,31 @@
 
         @media (min-width: 1400px) {
             .movies-grid {
-                grid-template-columns: repeat(6, 1fr); /* Show 6 movies per row on large screens */
+                grid-template-columns: repeat(6, 1fr);
             }
         }
 
         @media (max-width: 1399px) and (min-width: 1200px) {
             .movies-grid {
-                grid-template-columns: repeat(5, 1fr); /* Show 5 movies per row on medium-large screens */
+                grid-template-columns: repeat(5, 1fr);
             }
         }
 
         @media (max-width: 1199px) and (min-width: 992px) {
             .movies-grid {
-                grid-template-columns: repeat(4, 1fr); /* Show 4 movies per row on medium screens */
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
         @media (max-width: 991px) and (min-width: 768px) {
             .movies-grid {
-                grid-template-columns: repeat(3, 1fr); /* Show 3 movies per row on small-medium screens */
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
         @media (max-width: 767px) and (min-width: 576px) {
             .movies-grid {
-                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on small screens */
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
                 padding: 0 10px;
             }
@@ -182,25 +182,9 @@
 
         @media (max-width: 575px) {
             .movies-grid {
-                grid-template-columns: repeat(2, 1fr); /* Show 2 movies per row on extra small screens */
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
                 padding: 0 5px;
-            }
-        }
-
-        .movie-poster {
-            height: 260px; /* Slightly reduced height to fit more movies */
-        }
-
-        @media (max-width: 768px) {
-            .movie-poster {
-                height: 240px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .movie-poster {
-                height: 220px;
             }
         }
 
@@ -234,7 +218,7 @@
 
         .movie-poster {
             width: 100%;
-            height: 280px;
+            height: 260px;
             background: linear-gradient(45deg, #2c3e50, #4a6491);
             position: relative;
             overflow: hidden;
@@ -266,15 +250,6 @@
 
         .movie-year {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .movie-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #ffc107;
-            margin-top: 10px;
             font-size: 0.9rem;
         }
 
@@ -644,12 +619,12 @@
                 justify-content: flex-start;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
 
             .filter-section::-webkit-scrollbar {
-                display: none; /* Chrome, Safari, Opera */
+                display: none;
             }
 
             .search-container {
@@ -666,7 +641,7 @@
             }
             
             .movie-poster {
-                height: 220px;
+                height: 240px;
             }
         }
 
@@ -678,6 +653,10 @@
 
             .movies-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .movie-poster {
+                height: 220px;
             }
         }
 
@@ -1327,7 +1306,7 @@
             }
         }
 
-        // Render movie cards
+        // Render movie cards (without ratings)
         function renderMovies(movieList) {
             moviesGrid.innerHTML = '';
             if (!movieList || movieList.length === 0) {
@@ -1359,9 +1338,6 @@
                         <div class="movie-title">${movie.title}</div>
                         <div class="movie-year">${movie.year}</div>
                         <div class="movie-genres">${genresHtml}</div>
-                        <div class="movie-rating">
-                            <i class="fas fa-star"></i> ${movie.rating}/10
-                        </div>
                     </div>
                 `;
 
@@ -1396,7 +1372,6 @@
                             title: movie.title,
                             year: movie.year,
                             genre: movie.genre,
-                            rating: movie.rating,
                             poster: movie.poster,
                             watchUrl: movie.watchUrl,
                             downloadUrl: movie.downloadUrl
